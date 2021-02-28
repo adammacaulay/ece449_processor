@@ -37,7 +37,7 @@ begin
     else
       if (wr_enable = '1') then
         case wr_index(2 downto 0) is
-          when "000" => reg_file(0) <= wr_data;
+          when "000" => reg_file(0) <= (others => '0');
           when "001" => reg_file(1) <= wr_data;
           when "010" => reg_file(2) <= wr_data;
           when "011" => reg_file(3) <= wr_data;

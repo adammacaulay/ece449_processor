@@ -2,9 +2,6 @@ library ieee;
 use ieee.std_logic_1164.all;
 use IEEE.NUMERIC_STD.ALL;
 
-library xpm;
-use xpm.vcomponents.all;
-
 entity processor is
   port (
     clk     : in std_logic;
@@ -56,7 +53,7 @@ architecture Behavioural of processor is
   Component DECODER is
   PORT(
     instr      : in std_logic_vector(15 downto 0);
-    op_code    : out std_logic_vector(5 downto 0);
+    op_code    : out std_logic_vector(6 downto 0);
     ra         : out std_logic_vector(2 downto 0);
     rb         : out std_logic_vector(2 downto 0);
     rc         : out std_logic_vector(2 downto 0);
@@ -98,7 +95,7 @@ architecture Behavioural of processor is
     data1   : std_logic_vector(15 downto 0);
     data2   : std_logic_vector(15 downto 0);
     PC      : std_logic_vector(8 downto 0);
-    op_code : std_logic_vector(5 downto 0);
+    op_code : std_logic_vector(6 downto 0);
     -- mode? 
   end record t_IDEX; 
 
@@ -111,17 +108,17 @@ architecture Behavioural of processor is
     n_flag    : std_logic;
     o_flag    : std_logic;
     PC        : std_logic_vector(8 downto 0);
-    op_code   : std_logic_vector(5 downto 0);
+    op_code   : std_logic_vector(6 downto 0);
   end record t_EXMEM; 
 
   --Record for EX/MEM register
   type t_MEMWR is record
     instr     : std_logic_vector(15 downto 0);  --instruction from EXMEM
-    PC        : std_logic_vector(6 downto 0);
+    PC        : std_logic_vector(8 downto 0);
     result    : std_logic_vector(15 downto 0);
     overflow  : std_logic_vector(15 downto 0);
     o_flag    : std_logic;
-    op_code   : std_logic_vector(5 downto 0);
+    op_code   : std_logic_vector(6 downto 0);
   end record t_MEMWR; 
 
   --Registers for each stage of the pipeline
@@ -174,7 +171,7 @@ architecture Behavioural of processor is
   signal n_flag     : std_logic;
   signal o_flag     : std_logic;
   --DECODER
-  signal op_code    : std_logic_vector(5 downto 0);
+  signal op_code    : std_logic_vector(6 downto 0);
   signal ra         : std_logic_vector(2 downto 0);
   signal rb         : std_logic_vector(2 downto 0);
   signal rc         : std_logic_vector(2 downto 0);
@@ -242,6 +239,9 @@ begin
   
   wr_enable <= '1' when (to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 33) else '0';
   wr_ovenable <=  reg_MEMWR.o_flag;
+  wr_index <= reg_MEMWR.instr(8 downto 6);
+  
+  outport <= reg_MEMWR.result;
 
   --PROCESS FOR EACH STAGE OF PIPELINE
   ProgramCounterUpdate: process(clk, rst) is
@@ -287,7 +287,7 @@ begin
 				reg_IDEX.data2 <= rd_data2;
       elsif (a2_format = '1') then  -- A2 Format Instruction
         reg_IDEX.data1 <= rd_data1;
-				reg_IDEX.data2 <= c1;
+				reg_IDEX.data2 <= std_logic_vector(resize(signed(c1), reg_IDEX.data2'length));
       elsif (a3_format = '1') then  -- A3 Format Instruction
         reg_IDEX.data2 <= (others => '0');
         if (op_code = OP_TEST or op_code = OP_OUT) then
@@ -332,7 +332,7 @@ begin
       reg_MEMWR.PC        <= (others => '0');
       reg_MEMWR.result    <= (others => '0');
       reg_MEMWR.overflow  <= (others => '0');
-      reg_EXMEM.o_flag    <= '0';
+      reg_MEMWR.o_flag    <= '0';
     elsif rising_edge(clk) then
       reg_MEMWR.instr     <= reg_EXMEM.instr;
       reg_MEMWR.PC        <= reg_EXMEM.PC;
@@ -343,4 +343,4 @@ begin
     end if;
   end process; --WritebackStage
 
-end Behavioural ; -- Behavioural
+end Behavioural; -- Behavioural
