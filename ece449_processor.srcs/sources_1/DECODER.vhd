@@ -27,6 +27,9 @@ architecture Behavioural of DECODER is
     constant OP_SHL      : std_logic_vector := "0000101";
     constant OP_SHR      : std_logic_vector := "0000110";
     constant OP_TEST     : std_logic_vector := "0000111";
+
+    constant OP_OUT      : std_logic_vector := "0100000";
+    constant OP_IN       : std_logic_vector := "0100001";
   --ADD OTHER CODES FOR B AND L FORMAT HERE
   
   signal operation : std_logic_vector(6 downto 0);
@@ -56,6 +59,8 @@ begin
         when OP_SHL     => a2_format <= '1';
         when OP_SHR     => a2_format <= '1';
         when OP_TEST    => a3_format <= '1';
+        when OP_IN      => a3_format <= '1';
+        when OP_OUT     => a3_format <= '1';
         when others     => NULL;
        end case;
     end process; --Decode

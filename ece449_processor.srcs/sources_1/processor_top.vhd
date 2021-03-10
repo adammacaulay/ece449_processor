@@ -14,17 +14,17 @@ end processor;
 architecture Behavioural of processor is
 
   --ANY CONSTANTS OR FUNCTIONS HERE
-  constant OP_NOP     : std_logic_vector := "000";
-  constant OP_ADD     : std_logic_vector := "001";
-  constant OP_SUB     : std_logic_vector := "010";
-  constant OP_MUL     : std_logic_vector := "011";
-  constant OP_NAND    : std_logic_vector := "100";
-  constant OP_SHL     : std_logic_vector := "101";
-  constant OP_SHR     : std_logic_vector := "110";
-  constant OP_TEST    : std_logic_vector := "111";
+  constant OP_NOP     : std_logic_vector := "0000000";
+  constant OP_ADD     : std_logic_vector := "0000001";
+  constant OP_SUB     : std_logic_vector := "0000010";
+  constant OP_MUL     : std_logic_vector := "0000011";
+  constant OP_NAND    : std_logic_vector := "0000100";
+  constant OP_SHL     : std_logic_vector := "0000101";
+  constant OP_SHR     : std_logic_vector := "0000110";
+  constant OP_TEST    : std_logic_vector := "0000111";
 
-  constant OP_OUT     : std_logic_vector := "100000";
-  constant OP_IN      : std_logic_vector := "100001";
+  constant OP_OUT     : std_logic_vector := "0100000";
+  constant OP_IN      : std_logic_vector := "0100001";
 
   COMPONENT ROM_1024 is
   PORT (
@@ -151,7 +151,7 @@ architecture Behavioural of processor is
   --Interconnect Signal Declarations
   --ROM
   signal PC         : std_logic_vector(8 downto 0);
-  signal PC_next    : std_logic_vector(8 downto 0);
+  signal PC_next    : std_logic_vector(8 downto 0) := "000000000";
   signal douta      : std_logic_vector(15 downto 0);
   --RF
   signal rd_index1  : std_logic_vector(2 downto 0);
@@ -233,11 +233,11 @@ begin
   rd_index1  <= ra when (a2_format = '1' or a3_format = '1') else rb;
   rd_index2 <= rc;
 
-  alu_mode <= (others => '0') when (reg_IDEX.op_code = OP_OUT) or (reg_IDEX.op_code = OP_IN) else reg_IDEX.op_code(2 downto 0); 
-  in1 <= reg_IDEX.data1; 
+  alu_mode <= (others => '0') when (reg_IDEX.op_code = OP_OUT) else reg_IDEX.op_code(2 downto 0); 
+  in1 <= reg_IDEX.data1;
   in2 <= reg_IDEX.data2;
   
-  wr_enable <= '1' when (to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 33) else '0';
+  wr_enable <= '1' when ((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32) or to_integer(unsigned(reg_MEMWR.op_code)) = 33) else '0';
   wr_ovenable <=  reg_MEMWR.o_flag;
   wr_index <= reg_MEMWR.instr(8 downto 6);
   
@@ -248,9 +248,10 @@ begin
   begin
     if (rst = '1') then
       PC <= (others => '0');
+      PC_next <= std_logic_vector(unsigned(PC) + 2);--(others => '0');
     elsif falling_edge(clk) then
       PC <= PC_next;
-      PC_next <= std_logic_vector(unsigned(PC) + 1);
+      PC_next <= std_logic_vector(unsigned(PC) + 4);
     end if;
   end process; -- ProgramCounterUpdate
 
