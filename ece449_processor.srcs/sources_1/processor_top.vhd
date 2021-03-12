@@ -13,7 +13,6 @@ end processor;
 
 architecture Behavioural of processor is
 
-  --ANY CONSTANTS OR FUNCTIONS HERE
   constant OP_NOP     : std_logic_vector := "0000000";
   constant OP_ADD     : std_logic_vector := "0000001";
   constant OP_SUB     : std_logic_vector := "0000010";
@@ -26,11 +25,19 @@ architecture Behavioural of processor is
   constant OP_OUT     : std_logic_vector := "0100000";
   constant OP_IN      : std_logic_vector := "0100001";
 
-  COMPONENT ROM_1024 is
+  constant OP_BRR     : std_logic_vector := "1000000";
+  constant OP_BRR_N   : std_logic_vector := "1000001";
+  constant OP_BRR_Z   : std_logic_vector := "1000010";
+  constant OP_BR      : std_logic_vector := "1000011";
+  constant OP_BR_N    : std_logic_vector := "1000100";
+  constant OP_BR_Z    : std_logic_vector := "1000101";
+  constant OP_BR_SUB  : std_logic_vector := "1000110";
+  constant OP_RETURN  : std_logic_vector := "1000111";
+
+  COMPONENT DIST_ROM_1024 is
   PORT (
-    CLKA       : in std_logic;
-    ADDRA      : in std_logic_vector(8 DOWNTO 0);
-    DOUTA      : out std_logic_vector(15 DOWNTO 0)
+    a        : in std_logic_vector(8 DOWNTO 0);
+    spo      : out std_logic_vector(15 DOWNTO 0)
   );
   end Component;
 
@@ -58,10 +65,14 @@ architecture Behavioural of processor is
     rb         : out std_logic_vector(2 downto 0);
     rc         : out std_logic_vector(2 downto 0);
     c1         : out std_logic_vector(3 downto 0);
+    disp_s     : out std_logic_vector(5 downto 0);
+    disp_l     : out std_logic_vector(8 downto 0);
     a0_format  : out std_logic;
     a1_format  : out std_logic;
     a2_format  : out std_logic;
-    a3_format  : out std_logic
+    a3_format  : out std_logic;
+    b1_format  : out std_logic;
+    b2_format  : out std_logic
   );
   end Component;
 
@@ -87,7 +98,7 @@ architecture Behavioural of processor is
     instr   : std_logic_vector(15 downto 0);  --instruction from memory
     PC      : std_logic_vector(8 downto 0);      --program counter
     inport  : std_logic_vector(15 downto 0); --data from processor inport
-  end record t_IFID; 
+  end record t_IFID;
 
   --Record for ID/EX register
   type t_IDEX is record
@@ -96,8 +107,7 @@ architecture Behavioural of processor is
     data2   : std_logic_vector(15 downto 0);
     PC      : std_logic_vector(8 downto 0);
     op_code : std_logic_vector(6 downto 0);
-    -- mode? 
-  end record t_IDEX; 
+  end record t_IDEX;
 
   --Record for EX/MEM register
   type t_EXMEM is record
@@ -109,7 +119,7 @@ architecture Behavioural of processor is
     o_flag    : std_logic;
     PC        : std_logic_vector(8 downto 0);
     op_code   : std_logic_vector(6 downto 0);
-  end record t_EXMEM; 
+  end record t_EXMEM;
 
   --Record for EX/MEM register
   type t_MEMWR is record
@@ -119,7 +129,7 @@ architecture Behavioural of processor is
     overflow  : std_logic_vector(15 downto 0);
     o_flag    : std_logic;
     op_code   : std_logic_vector(6 downto 0);
-  end record t_MEMWR; 
+  end record t_MEMWR;
 
   --Registers for each stage of the pipeline
   signal reg_IFID : t_IFID := (instr => (others => '0'),
@@ -140,7 +150,7 @@ architecture Behavioural of processor is
                                  z_flag => '0',
                                  n_flag => '0',
                                  o_flag => '0');
-  
+
   signal reg_MEMWR : t_MEMWR := (instr => (others => '0'),
                                  PC => (others => '0'),
                                  op_code => (others => '0'),
@@ -176,18 +186,23 @@ architecture Behavioural of processor is
   signal rb         : std_logic_vector(2 downto 0);
   signal rc         : std_logic_vector(2 downto 0);
   signal c1         : std_logic_vector(3 downto 0);
+  signal disp_s     : std_logic_vector(5 downto 0);
+  signal disp_l     : std_logic_vector(8 downto 0);
   signal a0_format  : std_logic;
   signal a1_format  : std_logic;
   signal a2_format  : std_logic;
   signal a3_format  : std_logic;
+  signal b1_format  : std_logic;
+  signal b2_format  : std_logic;
+  --Branch Signal
+  signal branch     : std_logic;
 
 begin
 
-  rom : ROM_1024 PORT MAP (
-		CLKA => clk,
-		ADDRA => PC,
-		DOUTA => douta
-	);
+  rom0 : DIST_ROM_1024 PORT MAP (
+        a => PC,
+        spo => douta
+  );
 
   rf0: REGISTER_FILE PORT MAP (
     clk => clk,
@@ -210,10 +225,14 @@ begin
     rb => rb,
     rc => rc,
     c1 => c1,
+    disp_l => disp_l,
+    disp_s => disp_s,
     a0_format => a0_format,
     a1_format => a1_format,
     a2_format => a2_format,
-    a3_format => a3_format
+    a3_format => a3_format,
+    b1_format => b1_format,
+    b2_format => b2_format
   );
 
   alu0: ALU PORT MAP (
@@ -230,28 +249,36 @@ begin
   );
 
   --COMBINATIONAL LOGIC
-  rd_index1  <= ra when (a2_format = '1' or a3_format = '1') else rb;
+  rd_index1  <= ra when (a2_format = '1' or a3_format = '1' or b2_format = '1') else "111" when (op_code = OP_RETURN) else rb;
   rd_index2 <= rc;
 
-  alu_mode <= (others => '0') when (reg_IDEX.op_code = OP_OUT) else reg_IDEX.op_code(2 downto 0); 
+  alu_mode <= (others => '0') when (reg_IDEX.op_code = OP_OUT) else reg_IDEX.op_code(2 downto 0);
   in1 <= reg_IDEX.data1;
   in2 <= reg_IDEX.data2;
-  
-  wr_enable <= '1' when ((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32) or to_integer(unsigned(reg_MEMWR.op_code)) = 33) else '0';
+
+  wr_enable <= '1' when ((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32)
+                   or to_integer(unsigned(reg_MEMWR.op_code)) = 33) else '0';
   wr_ovenable <=  reg_MEMWR.o_flag;
   wr_index <= reg_MEMWR.instr(8 downto 6);
-  
-  outport <= reg_MEMWR.result;
+
+  PC_next <= std_logic_vector(resize(unsigned(reg_EXMEM.result), PC'length)) when (branch = '1') else std_logic_vector(unsigned(PC) + 1);
+
+  branch <= '1' when (reg_EXMEM.op_code = OP_BR) or (reg_EXMEM.op_code = OP_BRR) or (reg_EXMEM.op_code = OP_BR_SUB) or (reg_EXMEM.op_code = OP_RETURN)
+                or (((reg_EXMEM.op_code = OP_BR_N) or (reg_EXMEM.op_code = OP_BRR_N)) and reg_EXMEM.n_flag = '1')
+                or (((reg_EXMEM.op_code = OP_BR_Z) or (reg_EXMEM.op_code = OP_BRR_Z)) and reg_EXMEM.z_flag = '1')
+                else '0';
+
+  outport <= reg_MEMWR.result when (reg_EXMEM.op_code = OP_OUT) else (others => '0');
 
   --PROCESS FOR EACH STAGE OF PIPELINE
   ProgramCounterUpdate: process(clk, rst) is
   begin
     if (rst = '1') then
       PC <= (others => '0');
-      PC_next <= std_logic_vector(unsigned(PC) + 2);--(others => '0');
-    elsif falling_edge(clk) then
+      --PC_next <= std_logic_vector(unsigned(PC) + 1);--(others => '0');
+    elsif rising_edge(clk) then
       PC <= PC_next;
-      PC_next <= std_logic_vector(unsigned(PC) + 4);
+      --PC_next <= std_logic_vector(unsigned(PC) + 2);
     end if;
   end process; -- ProgramCounterUpdate
 
@@ -265,6 +292,11 @@ begin
       reg_IFID.instr    <= douta;
       reg_IFID.PC       <= PC;
       reg_IFID.inport   <= inport;
+
+      -- If branch occurs, flush
+      if (branch = '1') then
+        reg_IFID.instr  <= (others => '0');
+      end if;
     end if;
   end process; -- FetchStage
 
@@ -296,9 +328,22 @@ begin
         elsif (op_code = OP_IN) then
           reg_IDEX.data1 <= reg_IFID.inport;
         end if ;
-      else -- default casesnip
+      elsif (b1_format = '1') then
+        reg_IDEX.data1 <= std_logic_vector(resize(signed(PC), reg_IDEX.data1'length));
+				reg_IDEX.data2 <= std_logic_vector(resize(signed(disp_l), reg_IDEX.data1'length));
+      elsif (b2_format = '1') then
+        reg_IDEX.data1 <= rd_data1;
+				reg_IDEX.data2 <= std_logic_vector(resize(signed(disp_s), reg_IDEX.data1'length));
+      else
         reg_IDEX.data1  <= rd_data1;
         reg_IDEX.data2  <= rd_data2;
+      end if;
+
+      if (branch = '1') then
+        reg_IDEX.instr    <= (others => '0');
+        reg_IDEX.data1    <= (others => '0');
+        reg_IDEX.data2    <= (others => '0');
+        reg_IDEX.op_code  <= (others => '0');
       end if;
     end if;
   end process; -- DecodeStage
@@ -325,7 +370,7 @@ begin
       reg_EXMEM.op_code   <= reg_IDEX.op_code;
     end if;
   end process; -- ExecuteStage
-  
+
   WritebackStage: process(clk, rst) is
   begin
     if (rst = '1') then
