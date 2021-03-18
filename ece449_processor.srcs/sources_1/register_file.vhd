@@ -37,7 +37,7 @@ begin
     else
       if (wr_enable = '1') then
         case wr_index(2 downto 0) is
-          when "000" => reg_file(0) <= (others => '0');
+          when "000" => reg_file(0) <= wr_data; --(others => '0');
           when "001" => reg_file(1) <= wr_data;
           when "010" => reg_file(2) <= wr_data;
           when "011" => reg_file(3) <= wr_data;
@@ -57,7 +57,7 @@ end process;
 
 --read operation
 rd_data1 <=
-(others=>'0') when(rd_index1="000") else
+reg_file(0)   when(rd_index1="000") else
 reg_file(1)   when(rd_index1="001") else
 reg_file(2)   when(rd_index1="010") else
 reg_file(3)   when(rd_index1="011") else
@@ -66,7 +66,7 @@ reg_file(5)   when(rd_index1="101") else
 reg_file(6)   when(rd_index1="110") else reg_file(7);
 
 rd_data2 <=
-(others=>'0') when(rd_index2="000") else
+reg_file(0)   when(rd_index2="000") else
 reg_file(1)   when(rd_index2="001") else
 reg_file(2)   when(rd_index2="010") else
 reg_file(3)   when(rd_index2="011") else
