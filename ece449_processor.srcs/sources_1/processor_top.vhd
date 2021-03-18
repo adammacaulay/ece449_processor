@@ -254,15 +254,29 @@ begin
 
   alu_mode <= (others => '0') when (reg_IDEX.op_code = OP_OUT) else reg_IDEX.op_code(2 downto 0);
 	  
-  in1 <= reg_EXMEM.result when (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 32) or to_integer(unsigned(reg_EXMEM.op_code)) = 33) --forward when MEMWR is writing to register ra
+  in1 <= reg_MEMWR.result when (((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32) or to_integer(unsigned(reg_MEMWR.op_code)) = 33) --forward when MEMWR is writing to register ra
                 and (((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and EITHER if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
-                and (reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(5 downto 3))) --and if ra in reg_EXMEM is equal to rb in IDEX
-                or (((to_integer(unsigned(reg_EXMEM.op_code)) >= 5 and to_integer(unsigned(reg_EXMEM.op_code)) < 7) or to_integer(unsigned(reg_EXMEM.op_code)) = 32) --OR if IDEX uses one register input (SHL, SHR, OUT)
-                and (reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(8 downto 6))))) else reg_IDEX.data1; --and if ra in MEMWR is equal to ra in IDEX (else don't forward)
+                and (reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(5 downto 3))) --and if ra in MEMWR is equal to rb in IDEX
+                or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or to_integer(unsigned(reg_IDEX.op_code)) = 32) --OR if IDEX uses one register input (SHL, SHR, OUT)
+                and (reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(8 downto 6))))) --and if ra in MEMWR is equal to ra in IDEX 
+	  
+                else reg_EXMEM.result when (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 32) or to_integer(unsigned(reg_EXMEM.op_code)) = 33) --forward when EXMEM is writing to register ra
+                and (((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and EITHER if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
+                and (reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(5 downto 3))) --and if ra in EXMEM is equal to rb in IDEX
+                or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or to_integer(unsigned(reg_IDEX.op_code)) = 32) --OR if IDEX uses one register input (SHL, SHR, OUT)
+                and (reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(8 downto 6))))) --and if ra in EXMEM is equal to ra in IDEX
+
+                else reg_IDEX.data1; --else don't forward
                    
-  in2 <= reg_EXMEM.result when (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 32) or to_integer(unsigned(reg_EXMEM.op_code)) = 33) --forward when MEMWR is writing to register ra
-                and ((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
-                and (reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(2 downto 0)))) else reg_IDEX.data2; --and if ra in reg_EXMEM is equal to rc in IDEX (else don't )
+  in2 <= reg_MEMWR.result when (((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32) or to_integer(unsigned(reg_MEMWR.op_code)) = 33) --forward when MEMWR is writing to register ra
+                and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
+                and (reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(2 downto 0)))) --and if ra in MEMWR is equal to rc in IDEX
+
+                else reg_EXMEM.result when (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 32) or to_integer(unsigned(reg_EXMEM.op_code)) = 33) --forward when EXMEM is writing to register ra
+                and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
+                and (reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(2 downto 0)))) --and if ra in EXMEM is equal to rc in IDEX 
+
+                else reg_IDEX.data2; --else don't forward
 
   wr_enable <= '1' when ((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32)
                    or to_integer(unsigned(reg_MEMWR.op_code)) = 33) else '0';
