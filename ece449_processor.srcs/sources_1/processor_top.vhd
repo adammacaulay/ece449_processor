@@ -267,7 +267,7 @@ begin
   wr_enable <= '1' when ((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32)
                    or to_integer(unsigned(reg_MEMWR.op_code)) = 33) else '0';
   wr_ovenable <=  reg_MEMWR.o_flag;
-  wr_index <= reg_MEMWR.instr(8 downto 6);
+  wr_index <= "111" when (reg_EXMEM.op_code = OP_BR_SUB) else reg_MEMWR.instr(8 downto 6);
 
   PC_next <= std_logic_vector(resize(unsigned(reg_EXMEM.result), PC'length)) when (branch = '1') else std_logic_vector(unsigned(PC) + 1);
 
@@ -322,13 +322,13 @@ begin
       reg_IDEX.op_code <= op_code;
       if (a0_format = '1') then -- A0 Format Instruction
         reg_IDEX.data1 <= (others => '0');
-				reg_IDEX.data2 <= (others => '0');
+		reg_IDEX.data2 <= (others => '0');
       elsif (a1_format = '1') then  -- A1 Format Instruction
         reg_IDEX.data1 <= rd_data1;
-				reg_IDEX.data2 <= rd_data2;
+		reg_IDEX.data2 <= rd_data2;
       elsif (a2_format = '1') then  -- A2 Format Instruction
         reg_IDEX.data1 <= rd_data1;
-				reg_IDEX.data2 <= std_logic_vector(resize(signed(c1), reg_IDEX.data2'length));
+		reg_IDEX.data2 <= std_logic_vector(resize(signed(c1), reg_IDEX.data2'length));
       elsif (a3_format = '1') then  -- A3 Format Instruction
         reg_IDEX.data2 <= (others => '0');
         if (op_code = OP_TEST or op_code = OP_OUT) then
@@ -338,10 +338,10 @@ begin
         end if ;
       elsif (b1_format = '1') then
         reg_IDEX.data1 <= std_logic_vector(resize(signed(PC), reg_IDEX.data1'length));
-				reg_IDEX.data2 <= std_logic_vector(resize(signed(disp_l), reg_IDEX.data1'length));
+		reg_IDEX.data2 <= std_logic_vector(resize(signed(disp_l), reg_IDEX.data1'length));
       elsif (b2_format = '1') then
         reg_IDEX.data1 <= rd_data1;
-				reg_IDEX.data2 <= std_logic_vector(resize(signed(disp_s), reg_IDEX.data1'length));
+		reg_IDEX.data2 <= std_logic_vector(resize(signed(disp_s), reg_IDEX.data1'length));
       else
         reg_IDEX.data1  <= rd_data1;
         reg_IDEX.data2  <= rd_data2;

@@ -55,18 +55,7 @@ begin
     inport <= x"0002";
     wait for 30 us;
 
-    --Format B Test 1
-    reset <= '0';
-    inport <= x"0002"; --IN R0 , 02
-    wait for 10 us;
-    inport <= x"0003"; --IN R1 , 03
-    wait for 10 us;
-    inport <= x"0001"; --IN R2 , 01
-    wait for 10 us;
-    inport <= x"0005"; --IN R3 , 05
-    wait for 250 us;
-
---    --Format B Test 2
+--    --Format B Test 1
 --    reset <= '0';
 --    inport <= x"0002"; --IN R0 , 02
 --    wait for 10 us;
@@ -75,15 +64,26 @@ begin
 --    inport <= x"0001"; --IN R2 , 01
 --    wait for 10 us;
 --    inport <= x"0005"; --IN R3 , 05
---    wait for 10 us;
---    inport <= x"0000"; --IN R4 , 00
---    wait for 10 us;
---    inport <= x"0001"; --IN R5 , 01
---    wait for 10 us;
---    inport <= x"0005"; --IN R6 , 05
---    wait for 10 us;
---    inport <= x"0000"; --IN R7 , 00
 --    wait for 250 us;
+
+    --Format B Test 2
+    reset <= '0';
+    inport <= x"0002"; --IN R0 , 02
+    wait for 10 us;
+    inport <= x"0003"; --IN R1 , 03
+    wait for 10 us;
+    inport <= x"0001"; --IN R2 , 01
+    wait for 10 us;
+    inport <= x"0005"; --IN R3 , 05
+    wait for 10 us;
+    inport <= x"0000"; --IN R4 , 00
+    wait for 10 us;
+    inport <= x"0001"; --IN R5 , 01
+    wait for 10 us;
+    inport <= x"0005"; --IN R6 , 05
+    wait for 10 us;
+    inport <= x"0000"; --IN R7 , 00
+    wait for 500 us;
 
 --    --Format B Test 3
 --    reset <= '0';
