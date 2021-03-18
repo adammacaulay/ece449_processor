@@ -252,7 +252,9 @@ begin
   rd_index1  <= ra when (a2_format = '1' or a3_format = '1' or b2_format = '1') else "111" when (op_code = OP_RETURN) else rb;
   rd_index2 <= rc;
 
-  alu_mode <= (others => '0') when (reg_IDEX.op_code = OP_OUT) else reg_IDEX.op_code(2 downto 0);
+  alu_mode <= reg_IDEX.op_code(2 downto 0) when ((to_integer(unsigned(reg_IDEX.op_code))) < 8) else
+              "001" when ((to_integer(unsigned(reg_IDEX.op_code))) > 7 and (to_integer(unsigned(reg_IDEX.op_code))) < 72)
+              else (others => '0');
 	  
   in1 <= reg_MEMWR.result when (((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32) or to_integer(unsigned(reg_MEMWR.op_code)) = 33) --forward when MEMWR is writing to register ra
                 and (((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and EITHER if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
@@ -279,9 +281,9 @@ begin
                 else reg_IDEX.data2; --else don't forward
 
   wr_enable <= '1' when ((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32)
-                   or to_integer(unsigned(reg_MEMWR.op_code)) = 33) else '0';
+                   or to_integer(unsigned(reg_MEMWR.op_code)) = 33) or (reg_MEMWR.op_code = OP_BR_SUB) else '0';
   wr_ovenable <=  reg_MEMWR.o_flag;
-  wr_index <= "111" when (reg_EXMEM.op_code = OP_BR_SUB) else reg_MEMWR.instr(8 downto 6);
+  wr_index <= "111" when (reg_MEMWR.op_code = OP_BR_SUB) else reg_MEMWR.instr(8 downto 6);
 
   PC_next <= std_logic_vector(resize(unsigned(reg_EXMEM.result), PC'length)) when (branch = '1') else std_logic_vector(unsigned(PC) + 1);
 
