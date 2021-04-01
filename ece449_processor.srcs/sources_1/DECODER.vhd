@@ -17,7 +17,9 @@ entity DECODER is
     a2_format  : out std_logic;
     a3_format  : out std_logic;
     b1_format  : out std_logic;
-    b2_format  : out std_logic
+    b2_format  : out std_logic;
+    l1_format  : out std_logic;
+    l2_format  : out std_logic
   );
 end DECODER;
 
@@ -31,6 +33,11 @@ architecture Behavioural of DECODER is
     constant OP_SHL      : std_logic_vector := "0000101";
     constant OP_SHR      : std_logic_vector := "0000110";
     constant OP_TEST     : std_logic_vector := "0000111";
+
+    constant OP_LOAD     : std_logic_vector := "0010000";
+    constant OP_STORE    : std_logic_vector := "0010001";
+    constant OP_LOADIMM  : std_logic_vector := "0010010";
+    constant OP_MOV      : std_logic_vector := "0010011";
 
     constant OP_OUT      : std_logic_vector := "0100000";
     constant OP_IN       : std_logic_vector := "0100001";
@@ -66,6 +73,8 @@ begin
       a3_format <= '0';
       b1_format <= '0';
       b2_format <= '0';
+      l1_format <= '0';
+      l2_format <= '0';
     
       case operation is
         when OP_NOP     => a0_format <= '1';
@@ -78,6 +87,11 @@ begin
         when OP_TEST    => a3_format <= '1';
         when OP_IN      => a3_format <= '1';
         when OP_OUT     => a3_format <= '1';
+
+        when OP_LOAD    => l2_format <= '1';
+        when OP_STORE   => l2_format <= '1';
+        when OP_LOADIMM => l1_format <= '1';
+        when OP_MOV     => l2_format <= '1';
 
         when OP_BRR     => b1_format <= '1';
         when OP_BRR_N   => b1_format <= '1';
