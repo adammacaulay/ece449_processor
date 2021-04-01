@@ -354,55 +354,55 @@ port map (
               "001" when ((to_integer(unsigned(reg_IDEX.op_code))) > 7 and (to_integer(unsigned(reg_IDEX.op_code))) < 72)
               else (others => '0');
 
-  in1 <= reg_MEMWR.result when ((((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 17) or to_integer(unsigned(reg_MEMWR.op_code)) = 19 or to_integer(unsigned(reg_MEMWR.op_code)) = 33) --forward when MEMWR is writing to register ra/r.dest
-                and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or to_integer(unsigned(reg_IDEX.op_code)) = 16
-                or to_integer(unsigned(reg_IDEX.op_code)) = 17 or to_integer(unsigned(reg_IDEX.op_code)) = 19) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
+  in1 <= reg_MEMWR.result when ((((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 17) or reg_MEMWR.op_code = OP_MOV or reg_MEMWR.op_code = OP_IN) --forward when MEMWR is writing to register ra/r.dest
+                and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or reg_IDEX.op_code = OP_LOAD
+                or reg_IDEX.op_code = OP_STORE or reg_IDEX.op_code = OP_MOV) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
                 and reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(5 downto 3)) --and if ra in MEMWR is equal to rb/r.src in IDEX
-                or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or to_integer(unsigned(reg_IDEX.op_code)) = 32
+                or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or reg_IDEX.op_code = OP_OUT
                 or (to_integer(unsigned(reg_IDEX.op_code)) >= 67 and to_integer(unsigned(reg_IDEX.op_code)) < 71)) --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
                 and reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(8 downto 6)))) 
 
-                or (to_integer(unsigned(reg_MEMWR.op_code)) = 18 and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or to_integer(unsigned(reg_IDEX.op_code)) = 16
-                or to_integer(unsigned(reg_IDEX.op_code)) = 17 or to_integer(unsigned(reg_IDEX.op_code)) = 19) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
+                or (reg_MEMWR.op_code = OP_LOADIMM and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or reg_IDEX.op_code = OP_LOAD
+                or reg_IDEX.op_code = OP_STORE or reg_IDEX.op_code = OP_MOV) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
                 and reg_IDEX.instr(5 downto 3) = "111") 
-                or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or to_integer(unsigned(reg_IDEX.op_code)) = 32
+                or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or reg_IDEX.op_code = OP_OUT
                 or (to_integer(unsigned(reg_IDEX.op_code)) >= 67 and to_integer(unsigned(reg_IDEX.op_code)) < 71)) --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
-                and reg_IDEX.instr(8 downto 6) = "111") or to_integer(unsigned(reg_IDEX.op_code)) = 18)) 
-                or (((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 17) or to_integer(unsigned(reg_MEMWR.op_code)) = 19 or to_integer(unsigned(reg_MEMWR.op_code)) = 33) 
-                and reg_MEMWR.instr(8 downto 6) = "111" and to_integer(unsigned(reg_IDEX.op_code)) = 18)) --and if ra in MEMWR is equal to ra in IDEX
+                and reg_IDEX.instr(8 downto 6) = "111") or reg_IDEX.op_code = OP_LOADIMM)) 
+                or (((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 17) or reg_MEMWR.op_code = OP_MOV or reg_MEMWR.op_code = OP_IN) 
+                and reg_MEMWR.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM)) --and if ra in MEMWR is equal to ra in IDEX
 
-              else reg_EXMEM.result when (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 17) or to_integer(unsigned(reg_EXMEM.op_code)) = 16
-                or to_integer(unsigned(reg_EXMEM.op_code)) = 19 or to_integer(unsigned(reg_EXMEM.op_code)) = 33) --forward when EXMEM is writing to register ra/r.dest
-                and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or to_integer(unsigned(reg_IDEX.op_code)) = 17
-                or to_integer(unsigned(reg_IDEX.op_code)) = 19) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, STORE, MOV)
+              else reg_EXMEM.result when (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 17) or reg_EXMEM.op_code = OP_LOAD
+                or reg_EXMEM.op_code = OP_MOV or reg_EXMEM.op_code = OP_IN) --forward when EXMEM is writing to register ra/r.dest
+                and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or reg_IDEX.op_code = OP_STORE
+                or reg_IDEX.op_code = OP_MOV) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, STORE, MOV)
                 and reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(5 downto 3)) --and if ra in EXMEM is equal to rb in IDEX
-                or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or to_integer(unsigned(reg_IDEX.op_code)) = 32
+                or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or reg_IDEX.op_code = OP_OUT
                 or (to_integer(unsigned(reg_IDEX.op_code)) >= 67 and to_integer(unsigned(reg_IDEX.op_code)) < 71)) --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
                 and reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(8 downto 6)))) --and if ra in EXMEM is equal to ra in IDEX
             
-              else imm_result when ((to_integer(unsigned(reg_EXMEM.op_code)) = 18 and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or to_integer(unsigned(reg_IDEX.op_code)) = 16
-                or to_integer(unsigned(reg_IDEX.op_code)) = 17 or to_integer(unsigned(reg_IDEX.op_code)) = 19) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
+              else imm_result when ((reg_EXMEM.op_code = OP_LOADIMM and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or reg_IDEX.op_code = OP_LOAD
+                or reg_IDEX.op_code = OP_STORE or reg_IDEX.op_code = OP_MOV) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
                 and reg_IDEX.instr(5 downto 3) = "111") 
-                or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or to_integer(unsigned(reg_IDEX.op_code)) = 32
+                or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or reg_IDEX.op_code = OP_OUT
                 or (to_integer(unsigned(reg_IDEX.op_code)) >= 67 and to_integer(unsigned(reg_IDEX.op_code)) < 71)) --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
-                and reg_IDEX.instr(8 downto 6) = "111") or to_integer(unsigned(reg_IDEX.op_code)) = 18)) 
-                or (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 17) or to_integer(unsigned(reg_EXMEM.op_code)) = 19 or to_integer(unsigned(reg_EXMEM.op_code)) = 33) 
-                and reg_EXMEM.instr(8 downto 6) = "111" and to_integer(unsigned(reg_IDEX.op_code)) = 18))
+                and reg_IDEX.instr(8 downto 6) = "111") or reg_IDEX.op_code = OP_LOADIMM)) 
+                or (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 17) or reg_EXMEM.op_code = OP_MOV or reg_EXMEM.op_code = OP_IN) 
+                and reg_EXMEM.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM))
                 
               else reg_IDEX.data1; --else don't forward
                  
-  in2 <= reg_MEMWR.result when ((((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32) or to_integer(unsigned(reg_MEMWR.op_code)) = 33) --forward when MEMWR is writing to register ra
+  in2 <= reg_MEMWR.result when ((((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32) or reg_MEMWR.op_code = OP_IN) --forward when MEMWR is writing to register ra
                 and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
                 and reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(2 downto 0)))
 
-                or (to_integer(unsigned(reg_MEMWR.op_code)) = 18 and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
+                or (reg_MEMWR.op_code = OP_LOADIMM and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
                 and reg_IDEX.instr(2 downto 0) = "111"))) --and if ra in MEMWR is equal to rc in IDEX
 
-              else reg_EXMEM.result when (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 32) or to_integer(unsigned(reg_EXMEM.op_code)) = 33) --forward when EXMEM is writing to register ra
+              else reg_EXMEM.result when (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 32) or reg_EXMEM.op_code = OP_IN) --forward when EXMEM is writing to register ra
                 and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
                 and reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(2 downto 0))) --and if ra in EXMEM is equal to rc in IDEX 
               
-              else imm_result when (to_integer(unsigned(reg_EXMEM.op_code)) = 18 and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
+              else imm_result when (reg_EXMEM.op_code = OP_LOADIMM and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
                 and reg_IDEX.instr(2 downto 0) = "111"))
 
               else reg_IDEX.data2; --else don't forward
