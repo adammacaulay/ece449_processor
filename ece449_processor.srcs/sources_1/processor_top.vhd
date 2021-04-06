@@ -7,7 +7,8 @@ use xpm.vcomponents.all;
 entity processor is
   port (
     clk     : in std_logic;
-    rst     : in std_logic;
+    rst_l   : in std_logic;
+    rst_e   : in std_logic;
     inport  : in std_logic_vector(15 downto 0);
     outport : out std_logic_vector(15 downto 0)
   );
@@ -172,6 +173,7 @@ architecture Behavioural of processor is
                                  o_flag => '0');
 
   --Interconnect Signal Declarations
+  signal rst        : std_logic;
   --ROM
   signal PC         : std_logic_vector(15 downto 0);
   signal PC_next    : std_logic_vector(15 downto 0) := x"0000";
@@ -335,11 +337,14 @@ port map (
 );
 -- End of xpm_memory_dpdistram_inst instantiation
 
-  --COMBINATIONAL LOGIC
+  ------ COMBINATIONAL LOGIC   ------ 
+  rst <= rst_e or rst_l;
 
   -- PROGRAM COUNTER
   PC_next <= std_logic_vector(resize(unsigned(reg_EXMEM.result), PC'length)) when (branch = '1') else std_logic_vector(unsigned(PC) + 2);
   addr <= std_logic_vector(shift_right(unsigned(PC), 1));
+  
+  -- ROM SIGNALS
   rom_a <= std_logic_vector(resize(unsigned(addr), rom_a'length));
 
   -- REGISTER FILE SIGNALS
@@ -420,14 +425,13 @@ port map (
   -- RAM SIGNALS
   ram_wr_en <= "1" when (reg_EXMEM.op_code = OP_STORE) else "0";
   addra <= reg_EXMEM.result when (reg_EXMEM.op_code = OP_LOAD) else reg_EXMEM.str_dest when (reg_EXMEM.op_code = OP_STORE) else (others => '0');
+  addrb <= std_logic_vector(resize(unsigned(addr) - 1024, addrb'length));
   dina <= reg_EXMEM.result when (reg_EXMEM.op_code = OP_STORE) else (others => '0');
-
+  
   str_dest <= reg_EXMEM.result when ((((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 17) or reg_EXMEM.op_code = OP_LOAD
-                               or reg_EXMEM.op_code = OP_MOV or reg_EXMEM.op_code = OP_IN) and (reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(8 downto 6))) or (reg_EXMEM.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM))
-
+                                 or reg_EXMEM.op_code = OP_MOV or reg_EXMEM.op_code = OP_IN) and (reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(8 downto 6))) or (reg_EXMEM.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM))
                                else reg_MEMWR.result when((((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 17) or reg_MEMWR.op_code = OP_LOAD
-                               or reg_MEMWR.op_code = OP_MOV or reg_MEMWR.op_code = OP_IN) and (reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(8 downto 6))) or (reg_MEMWR.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM))
-                               
+                                 or reg_MEMWR.op_code = OP_MOV or reg_MEMWR.op_code = OP_IN) and (reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(8 downto 6))) or (reg_MEMWR.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM))
                                else reg_IDEX.str_dest;
   -- BRANCH TRIGGER
   branch <= '1' when (reg_EXMEM.op_code = OP_BR) or (reg_EXMEM.op_code = OP_BRR) or (reg_EXMEM.op_code = OP_BR_SUB) or (reg_EXMEM.op_code = OP_RETURN)
@@ -438,13 +442,15 @@ port map (
   -- STALL TRIGGER
   stall_trig <= '1' when (reg_EXMEM.op_code = OP_LOAD) else '0';
 
-  outport <= reg_MEMWR.result when (reg_EXMEM.op_code = OP_OUT) else (others => '0');
+  outport <= reg_MEMWR.result when (reg_MEMWR.op_code = OP_OUT) else (others => '0');
 
-  --PROCESS FOR EACH STAGE OF PIPELINE
+  ------ PROCESS FOR EACH STAGE OF PIPELINE ------ 
   ProgramCounterUpdate: process(clk, rst) is
   begin
-    if (rst = '1') then
+    if (rst_l = '1') then
       PC <= (others => '0');
+    elsif (rst_e = '1') then
+      PC <= x"0002";
     elsif rising_edge(clk) then
       if (stall_trig = '1') then
         PC <= PC;
@@ -462,13 +468,19 @@ port map (
       reg_IFID.inport <= (others => '0');
     elsif rising_edge(clk) then
       if (stall_trig = '1') then
-        reg_IFID.instr    <= reg_IFID.instr;
-        reg_IFID.PC       <= reg_IFID.PC;
-        reg_IFID.inport   <= reg_IFID.inport;
+        reg_IFID.instr  <= reg_IFID.instr;
+        reg_IFID.PC     <= reg_IFID.PC;
+        reg_IFID.inport <= reg_IFID.inport;
       else
-        reg_IFID.instr    <= spo;
-        reg_IFID.PC       <= PC;
-        reg_IFID.inport   <= inport;
+        reg_IFID.PC     <= PC;
+        reg_IFID.inport <= inport;
+        if (to_integer(unsigned(addr)) < 1024) then
+          reg_IFID.instr <= spo;
+        elsif (to_integer(unsigned(addr)) >= 1024 and to_integer(unsigned(addr)) < 2048) then
+          reg_IFID.instr <= doutb;
+        else
+          reg_IFID.instr  <= (others => '0');
+        end if;
         -- If branch occurs, flush
         if (branch = '1') then
           reg_IFID.instr  <= (others => '0');

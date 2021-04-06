@@ -63,8 +63,8 @@ begin
   end if;
 end process;
 
-result    <= result_32(15 downto 0) when rst= '0' else (others=>'0');
-overflow  <= result_32(31 downto 16) when rst= '0' else (others=>'0');
+result    <= result_32(15 downto 0) when rst = '0' else (others=>'0');
+overflow  <= result_32(31 downto 16) when rst = '0' else (others=>'0');
 o_flag    <= '0' when rst= '1' else '1' when (or_reduce(result_32(31 downto 16)) = '1' and (result_32(15) = '0')) else 
              '1' when (and_reduce(result_32(31 downto 16)) = '0' and (result_32(15) = '1')) else '0';
 
@@ -78,7 +78,7 @@ begin
     when OP_NAND    => result_32 <= (in1_32 nand in2_32);
     when OP_SHL     => result_32 <= std_logic_vector(shift_left(unsigned(in1_32), to_integer(signed(in2_32))));
     when OP_SHR     => result_32 <=  std_logic_vector(shift_right(unsigned(in1_32), to_integer(signed(in2_32))));
-    when OP_TEST    => result_32 <= (others => '0'); --TODO
+    when OP_TEST    => result_32 <= (others => '0');
     when others     => NULL;
    end case;
 end process;
