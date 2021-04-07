@@ -142,36 +142,6 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../Assembler/Test16A.coe">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../../Assembler/Test2A.coe">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../../Assembler/FormatB_Test1.coe">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../../Assembler/FormatB_Test2.coe">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../../Assembler/FormatB_Test3.coe">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
       <File Path="$PPRDIR/../../Assembler/FormatL_Test.coe">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -199,7 +169,6 @@
       <Filter Type="Constrs"/>
       <File Path="$PSRCDIR/constrs_1/imports/bootloader_test/constraints.xdc">
         <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="ImportPath" Val="$PPRDIR/../bootloader_test/constraints.xdc"/>
           <Attr Name="ImportTime" Val="1617656934"/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -280,11 +249,11 @@
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
       <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2019" CtrlBit="true">
-        <ReportConfig DisplayName="Utilization - Synth Design" Name="synth_1_synth_report_utilization_0" Spec="report_utilization" RunStep="synth_design" ReportFile="processor_utilization_synth.rpt" Version="1" Minor="0">
+        <ReportConfig DisplayName="Utilization - Synth Design" Name="synth_1_synth_report_utilization_0" Spec="report_utilization" RunStep="synth_design" ReportFile="hw_top_utilization_synth.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
           <ReportConfigOutputOption Name="pb" Type="string" Value="processor_utilization_synth.pb"/>
         </ReportConfig>
-        <ReportConfig DisplayName="synthesis_report" Name="synth_1_synth_synthesis_report_0" Spec="" RunStep="synth_design" ReportFile="processor.vds">
+        <ReportConfig DisplayName="synthesis_report" Name="synth_1_synth_synthesis_report_0" Spec="" RunStep="synth_design" ReportFile="hw_top.vds">
           <ReportConfigOption Name="dummy_option" Type="string"/>
         </ReportConfig>
       </ReportStrategy>

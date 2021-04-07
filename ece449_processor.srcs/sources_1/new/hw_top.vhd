@@ -84,6 +84,7 @@ architecture Behavioural of hw_top is
   --
   signal mm_out : std_logic_vector(15 downto 0);
   signal out_port : std_logic_vector(15 downto 0);
+  signal inport : std_logic_vector(15 downto 0);
   signal reset : std_logic;
 
 begin
@@ -97,7 +98,7 @@ begin
 --    btnD => btnD,
 --    btnL => btnL,
 --    btnR => btnR,
-    inport => in_port,
+    inport => inport,
     mm_input => dip_switches,
     outport => out_port,
     mm_output => mm_out,
@@ -213,7 +214,7 @@ begin
         end if;
      end process;
 
-
+    inport <= in_port(15 downto 5) & "00000";
     reset <= btnL or btnC;
     ack <= out_port(0);
     data_out <= output_stream(59);
