@@ -503,10 +503,10 @@ port map (
         else
           reg_IFID.instr  <= (others => '0');
         end if;
---        -- If branch occurs, flush
---        if (branch = '1') then
---          reg_IFID.instr  <= (others => '0');
---        end if;
+        -- If branch occurs, flush
+        if (branch = '1') then
+          reg_IFID.instr  <= (others => '0');
+        end if;
       end if;
     end if;
   end process; -- FetchStage
@@ -565,7 +565,7 @@ port map (
             reg_IDEX.data1 <= reg_IFID.inport;
           end if ;
         elsif (b1_format = '1') then
-          reg_IDEX.data1 <= PC; --std_logic_vector(resize(signed(PC), reg_IDEX.data1'length));
+          reg_IDEX.data1 <= reg_IFID.PC; --std_logic_vector(resize(signed(PC), reg_IDEX.data1'length));
           reg_IDEX.data2 <= std_logic_vector(resize(shift_left(signed(disp_l), 1), reg_IDEX.data2'length));
           reg_IDEX.str_dest <= (others => '0');
         elsif (b2_format = '1') then
