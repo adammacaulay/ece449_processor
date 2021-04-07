@@ -6,11 +6,14 @@ use xpm.vcomponents.all;
 
 entity processor is
   port (
-    clk     : in std_logic;
-    rst_l   : in std_logic;
-    rst_e   : in std_logic;
-    inport  : in std_logic_vector(15 downto 0);
-    outport : out std_logic_vector(15 downto 0)
+    clk       : in std_logic;
+    rst_l     : in std_logic;
+    rst_e     : in std_logic;
+    inport    : in std_logic_vector(15 downto 0);
+    mm_input  : in std_logic_vector(15 downto 0);
+    outport   : out std_logic_vector(15 downto 0);
+    mm_output : out std_logic_vector(15 downto 0);
+    leds      : out std_logic_vector(15 downto 0)
   );
 end processor;
 
@@ -59,9 +62,7 @@ architecture Behavioural of processor is
     rd_data2        : out std_logic_vector(15 downto 0);
     wr_index        : in std_logic_vector(2 downto 0);
     wr_data         : in std_logic_vector(15 downto 0);
-    wr_overflowdata : in std_logic_vector(15 downto 0);
-    wr_enable       : in std_logic;
-    wr_ovenable     : in std_logic
+    wr_enable       : in std_logic
   );
   end Component;
 
@@ -118,6 +119,10 @@ architecture Behavioural of processor is
     str_dest: std_logic_vector(15 downto 0);
     PC      : std_logic_vector(15 downto 0);
     op_code : std_logic_vector(6 downto 0);
+    regwr   : std_logic;
+    ra_instr: std_logic;
+    rb_instr: std_logic;
+    rc_instr: std_logic;
   end record t_IDEX;
 
   --Record for EX/MEM register
@@ -131,6 +136,10 @@ architecture Behavioural of processor is
     o_flag    : std_logic;
     PC        : std_logic_vector(15 downto 0);
     op_code   : std_logic_vector(6 downto 0);
+    regwr     : std_logic;
+    ra_instr  : std_logic;
+    rb_instr  : std_logic;
+    rc_instr  : std_logic;
   end record t_EXMEM;
 
   --Record for EX/MEM register
@@ -141,6 +150,10 @@ architecture Behavioural of processor is
     overflow  : std_logic_vector(15 downto 0);
     o_flag    : std_logic;
     op_code   : std_logic_vector(6 downto 0);
+    regwr     : std_logic;
+    ra_instr  : std_logic;
+    rb_instr  : std_logic;
+    rc_instr  : std_logic;
   end record t_MEMWR;
 
   --Registers for each stage of the pipeline
@@ -153,7 +166,11 @@ architecture Behavioural of processor is
                                data2 => (others => '0'),
                                str_dest => (others => '0'),
                                PC => (others => '0'),
-                               op_code => (others => '0'));
+                               op_code => (others => '0'),
+                               regwr => '0',
+                               ra_instr => '0',
+                               rb_instr => '0',
+                               rc_instr => '0');
 
   signal reg_EXMEM : t_EXMEM := (instr => (others => '0'),
                                  result => (others => '0'),
@@ -163,17 +180,27 @@ architecture Behavioural of processor is
                                  op_code => (others => '0'),
                                  z_flag => '0',
                                  n_flag => '0',
-                                 o_flag => '0');
+                                 o_flag => '0',
+                                 regwr => '0',
+                                 ra_instr => '0',
+                                 rb_instr => '0',
+                                 rc_instr => '0');
 
   signal reg_MEMWR : t_MEMWR := (instr => (others => '0'),
                                  PC => (others => '0'),
                                  op_code => (others => '0'),
                                  result => (others => '0'),
                                  overflow => (others => '0'),
-                                 o_flag => '0');
+                                 o_flag => '0',
+                                 regwr => '0',
+                                 ra_instr => '0',
+                                 rb_instr => '0',
+                                 rc_instr => '0');
 
   --Interconnect Signal Declarations
   signal rst        : std_logic;
+  signal mm_out     : std_logic_vector(15 downto 0);
+  signal leds_reg   : std_logic_vector(15 downto 0);
   --ROM
   signal PC         : std_logic_vector(15 downto 0);
   signal PC_next    : std_logic_vector(15 downto 0) := x"0000";
@@ -199,7 +226,6 @@ architecture Behavioural of processor is
   signal rd_data2   : std_logic_vector(15 downto 0);
   signal wr_index   : std_logic_vector(2 downto 0);
   signal wr_enable  : std_logic;
-  signal wr_ovenable: std_logic;
   signal imm_result : std_logic_vector(15 downto 0);
   --ALU
   signal in1        : std_logic_vector(15 downto 0);
@@ -226,6 +252,10 @@ architecture Behavioural of processor is
   signal b2_format  : std_logic;
   signal l1_format  : std_logic;
   signal l2_format  : std_logic;
+  signal regwr      : std_logic;
+  signal ra_instr   : std_logic;
+  signal rb_instr   : std_logic;
+  signal rc_instr   : std_logic;
   --Branch Signal
   signal branch     : std_logic;
   --Pipeline Stall Signals
@@ -234,8 +264,8 @@ architecture Behavioural of processor is
 begin
 
   rom0 : DIST_ROM_1024 PORT MAP (
-        a => rom_a,
-        spo => spo
+    a => rom_a,
+    spo => spo
   );
 
   rf0: REGISTER_FILE PORT MAP (
@@ -247,9 +277,7 @@ begin
     rd_data2 => rd_data2,
     wr_index => wr_index,
     wr_data => reg_MEMWR.result,
-    wr_overflowdata => reg_MEMWR.overflow,
-    wr_enable => wr_enable,
-    wr_ovenable => wr_ovenable
+    wr_enable => wr_enable
   );
 
   decoder0: DECODER PORT MAP (
@@ -337,13 +365,30 @@ port map (
 );
 -- End of xpm_memory_dpdistram_inst instantiation
 
-  ------ COMBINATIONAL LOGIC   ------ 
+  ------ COMBINATIONAL LOGIC   ------
   rst <= rst_e or rst_l;
+  mm_out <= reg_EXMEM.result when (reg_EXMEM.op_code = OP_STORE and addra = x"FFF2") else (others => '0');
 
   -- PROGRAM COUNTER
   PC_next <= std_logic_vector(resize(unsigned(reg_EXMEM.result), PC'length)) when (branch = '1') else std_logic_vector(unsigned(PC) + 2);
   addr <= std_logic_vector(shift_right(unsigned(PC), 1));
-  
+
+  -- DECODE SIGNALS
+  regwr <= '1' when (to_integer(unsigned(op_code)) >= 1 and to_integer(unsigned(op_code)) < 17)
+                    or op_code = OP_MOV or op_code = OP_IN
+          else '0';
+
+  ra_instr <= '1' when (to_integer(unsigned(op_code)) >= 5 and to_integer(unsigned(op_code)) < 7) or op_code = OP_OUT
+                    or (to_integer(unsigned(op_code)) >= 67 and to_integer(unsigned(op_code)) < 71)
+          else '0';
+
+  rb_instr <= '1' when (to_integer(unsigned(op_code)) >= 1 and to_integer(unsigned(op_code)) < 5) or op_code = OP_STORE
+                    or op_code = OP_MOV or op_code = OP_LOAD
+          else '0';
+
+  rc_instr <= '1' when to_integer(unsigned(op_code)) >= 1 and to_integer(unsigned(op_code)) < 5
+          else '0';
+
   -- ROM SIGNALS
   rom_a <= std_logic_vector(resize(unsigned(addr), rom_a'length));
 
@@ -357,64 +402,42 @@ port map (
                     or (reg_MEMWR.op_code = OP_IN) or (reg_MEMWR.op_code = OP_BR_SUB) or (reg_MEMWR.op_code = OP_LOAD)
                     or (reg_MEMWR.op_code = OP_LOADIMM) or (reg_MEMWR.op_code = OP_MOV)) else '0';
 
-  wr_ovenable <=  reg_MEMWR.o_flag;
-
   -- EXECUTE SIGNALS
   alu_mode <= reg_IDEX.op_code(2 downto 0) when ((to_integer(unsigned(reg_IDEX.op_code))) < 8) else
               "001" when ((to_integer(unsigned(reg_IDEX.op_code))) > 7 and (to_integer(unsigned(reg_IDEX.op_code))) < 72)
               else (others => '0');
 
-  in1 <= reg_EXMEM.result when (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 17) or reg_EXMEM.op_code = OP_LOAD
-              or reg_EXMEM.op_code = OP_MOV or reg_EXMEM.op_code = OP_IN) --forward when EXMEM is writing to register ra/r.dest
-              and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or reg_IDEX.op_code = OP_STORE
-              or reg_IDEX.op_code = OP_MOV) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, STORE, MOV)
-              and reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(5 downto 3)) --and if ra in EXMEM is equal to rb in IDEX
-              or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or reg_IDEX.op_code = OP_OUT
-              or (to_integer(unsigned(reg_IDEX.op_code)) >= 67 and to_integer(unsigned(reg_IDEX.op_code)) < 71)) --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
-              and reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(8 downto 6)))) --and if ra in EXMEM is equal to ra in IDEX
+ in1 <= reg_EXMEM.result when ((reg_EXMEM.regwr = '1') and (((reg_IDEX.rb_instr = '1') --forward when EXMEM is writing to register ra/r.dest and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, STORE, MOV)
+             and reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(5 downto 3)) or ((reg_IDEX.ra_instr = '1') --and if ra in EXMEM is equal to rb in IDEX OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
+             and reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(8 downto 6)))) --and if ra in EXMEM is equal to ra in IDEX
 
-            else imm_result when ((reg_EXMEM.op_code = OP_LOADIMM and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or reg_IDEX.op_code = OP_LOAD
-              or reg_IDEX.op_code = OP_STORE or reg_IDEX.op_code = OP_MOV) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
-              and reg_IDEX.instr(5 downto 3) = "111")
-              or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or reg_IDEX.op_code = OP_OUT
-              or (to_integer(unsigned(reg_IDEX.op_code)) >= 67 and to_integer(unsigned(reg_IDEX.op_code)) < 71)) --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
-              and reg_IDEX.instr(8 downto 6) = "111") or reg_IDEX.op_code = OP_LOADIMM))
+           else imm_result when ((reg_EXMEM.op_code = OP_LOADIMM and (((reg_IDEX.rb_instr = '1') --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
+             and reg_IDEX.instr(5 downto 3) = "111") or ((reg_IDEX.ra_instr = '1') --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
+             and reg_IDEX.instr(8 downto 6) = "111") or reg_IDEX.op_code = OP_LOADIMM))
+             or ((reg_EXMEM.regwr = '1') and reg_EXMEM.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM))
 
-              or (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 17) or reg_EXMEM.op_code = OP_MOV or reg_EXMEM.op_code = OP_IN)
-              and reg_EXMEM.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM))
+           else reg_MEMWR.result when (((reg_MEMWR.regwr = '1' or reg_EXMEM.op_code = OP_LOAD) --forward when MEMWR is writing to register ra/r.dest
+             and (((reg_IDEX.rb_instr = '1') and reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(5 downto 3)) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV) and if ra in MEMWR is equal to rb/r.src in IDEX
+             or ((reg_IDEX.ra_instr = '1') and reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(8 downto 6)))) --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
 
-            else reg_MEMWR.result when ((((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 17) or reg_MEMWR.op_code = OP_MOV or reg_MEMWR.op_code = OP_IN) --forward when MEMWR is writing to register ra/r.dest
-              and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or reg_IDEX.op_code = OP_LOAD
-              or reg_IDEX.op_code = OP_STORE or reg_IDEX.op_code = OP_MOV) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
-              and reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(5 downto 3)) --and if ra in MEMWR is equal to rb/r.src in IDEX
-              or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or reg_IDEX.op_code = OP_OUT
-              or (to_integer(unsigned(reg_IDEX.op_code)) >= 67 and to_integer(unsigned(reg_IDEX.op_code)) < 71)) --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
-              and reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(8 downto 6))))
+             or (reg_MEMWR.op_code = OP_LOADIMM and (((reg_IDEX.rb_instr = '1') --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
+             and reg_IDEX.instr(5 downto 3) = "111") or ((reg_IDEX.ra_instr = '1') --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
+             and reg_IDEX.instr(8 downto 6) = "111") or reg_IDEX.op_code = OP_LOADIMM))
+             or ((reg_MEMWR.regwr = '1') and reg_MEMWR.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM)) --and if ra in MEMWR is equal to ra in IDEX
 
-              or (reg_MEMWR.op_code = OP_LOADIMM and ((((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) or reg_IDEX.op_code = OP_LOAD
-              or reg_IDEX.op_code = OP_STORE or reg_IDEX.op_code = OP_MOV) --and EITHER if rb/r.src in IDEX is an input (ADD, SUB, MULT, NAND, LOAD, STORE, MOV)
-              and reg_IDEX.instr(5 downto 3) = "111")
-              or (((to_integer(unsigned(reg_IDEX.op_code)) >= 5 and to_integer(unsigned(reg_IDEX.op_code)) < 7) or reg_IDEX.op_code = OP_OUT
-              or (to_integer(unsigned(reg_IDEX.op_code)) >= 67 and to_integer(unsigned(reg_IDEX.op_code)) < 71)) --OR if ra in IDEX is an input (SHL, SHR, OUT, BR)
-              and reg_IDEX.instr(8 downto 6) = "111") or reg_IDEX.op_code = OP_LOADIMM))
+           else reg_IDEX.data1; --else don't forward
 
-              or (((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 17) or reg_MEMWR.op_code = OP_MOV or reg_MEMWR.op_code = OP_IN)
-              and reg_MEMWR.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM)) --and if ra in MEMWR is equal to ra in IDEX
-
-            else reg_IDEX.data1; --else don't forward
-
-  in2 <= reg_EXMEM.result when (((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 32) or reg_EXMEM.op_code = OP_IN) --forward when EXMEM is writing to register ra
-              and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
+  in2 <= reg_EXMEM.result when ((reg_EXMEM.regwr = '1') --forward when EXMEM is writing to register ra
+              and ((reg_IDEX.rc_instr = '1') --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
               and reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(2 downto 0))) --and if ra in EXMEM is equal to rc in IDEX
 
-            else imm_result when (reg_EXMEM.op_code = OP_LOADIMM and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
+            else imm_result when (reg_EXMEM.op_code = OP_LOADIMM and ((reg_IDEX.rc_instr = '1') --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
               and reg_IDEX.instr(2 downto 0) = "111"))
 
-            else reg_MEMWR.result when ((((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 32) or reg_MEMWR.op_code = OP_IN) --forward when MEMWR is writing to register ra
-              and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
+            else reg_MEMWR.result when (((reg_MEMWR.regwr = '1') --forward when MEMWR is writing to register ra
+              and ((reg_IDEX.rc_instr = '1') --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
               and reg_MEMWR.instr(8 downto 6) = reg_IDEX.instr(2 downto 0)))
-
-              or (reg_MEMWR.op_code = OP_LOADIMM and ((to_integer(unsigned(reg_IDEX.op_code)) >= 1 and to_integer(unsigned(reg_IDEX.op_code)) < 5) --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
+              or (reg_MEMWR.op_code = OP_LOADIMM and ((reg_IDEX.rc_instr = '1') --and if IDEX uses two register inputs (ADD, SUB, MULT, NAND)
               and reg_IDEX.instr(2 downto 0) = "111"))) --and if ra in MEMWR is equal to rc in IDEX
 
             else reg_IDEX.data2; --else don't forward
@@ -423,11 +446,11 @@ port map (
                 else (reg_EXMEM.instr(7 downto 0) & reg_EXMEM.result(7 downto 0));
 
   -- RAM SIGNALS
-  ram_wr_en <= "1" when (reg_EXMEM.op_code = OP_STORE) else "0";
+  ram_wr_en <= "1" when (reg_EXMEM.op_code = OP_STORE and to_integer(unsigned(reg_EXMEM.str_dest)) < 1024) else "0";
   addra <= reg_EXMEM.result when (reg_EXMEM.op_code = OP_LOAD) else reg_EXMEM.str_dest when (reg_EXMEM.op_code = OP_STORE) else (others => '0');
   addrb <= std_logic_vector(resize(unsigned(addr) - 1024, addrb'length));
   dina <= reg_EXMEM.result when (reg_EXMEM.op_code = OP_STORE) else (others => '0');
-  
+
   str_dest <= reg_EXMEM.result when ((((to_integer(unsigned(reg_EXMEM.op_code)) >= 1 and to_integer(unsigned(reg_EXMEM.op_code)) < 17) or reg_EXMEM.op_code = OP_LOAD
                                  or reg_EXMEM.op_code = OP_MOV or reg_EXMEM.op_code = OP_IN) and (reg_EXMEM.instr(8 downto 6) = reg_IDEX.instr(8 downto 6))) or (reg_EXMEM.instr(8 downto 6) = "111" and reg_IDEX.op_code = OP_LOADIMM))
                                else reg_MEMWR.result when((((to_integer(unsigned(reg_MEMWR.op_code)) >= 1 and to_integer(unsigned(reg_MEMWR.op_code)) < 17) or reg_MEMWR.op_code = OP_LOAD
@@ -443,13 +466,14 @@ port map (
   stall_trig <= '1' when (reg_EXMEM.op_code = OP_LOAD) else '0';
 
   outport <= reg_MEMWR.result when (reg_MEMWR.op_code = OP_OUT) else (others => '0');
+  leds_reg <= reg_MEMWR.overflow when (reg_MEMWR.o_flag = '1') else (others => '0');
 
-  ------ PROCESS FOR EACH STAGE OF PIPELINE ------ 
+  ------ PROCESS FOR EACH STAGE OF PIPELINE ------
   ProgramCounterUpdate: process(clk, rst) is
   begin
-    if (rst_l = '1') then
+    if (rst_e = '1') then
       PC <= (others => '0');
-    elsif (rst_e = '1') then
+    elsif (rst_l = '1') then
       PC <= x"0002";
     elsif rising_edge(clk) then
       if (stall_trig = '1') then
@@ -481,10 +505,10 @@ port map (
         else
           reg_IFID.instr  <= (others => '0');
         end if;
-        -- If branch occurs, flush
-        if (branch = '1') then
-          reg_IFID.instr  <= (others => '0');
-        end if;
+--        -- If branch occurs, flush
+--        if (branch = '1') then
+--          reg_IFID.instr  <= (others => '0');
+--        end if;
       end if;
     end if;
   end process; -- FetchStage
@@ -498,6 +522,10 @@ port map (
       reg_IDEX.str_dest <= (others => '0');
       reg_IDEX.PC       <= (others => '0');
       reg_IDEX.op_code  <= (others => '0');
+      reg_IDEX.regwr    <= '0';
+      reg_IDEX.ra_instr <= '0';
+      reg_IDEX.rb_instr <= '0';
+      reg_IDEX.rc_instr <= '0';
     elsif rising_edge(clk) then
       if (stall_trig = '1') then
         reg_IDEX.instr    <= reg_IDEX.instr;
@@ -506,10 +534,18 @@ port map (
         reg_IDEX.str_dest <= reg_IDEX.str_dest;
         reg_IDEX.PC       <= reg_IDEX.PC;
         reg_IDEX.op_code  <= reg_IDEX.op_code;
+        reg_IDEX.regwr    <= reg_IDEX.regwr;
+        reg_IDEX.ra_instr <= reg_IDEX.ra_instr;
+        reg_IDEX.rb_instr <= reg_IDEX.rb_instr;
+        reg_IDEX.rc_instr <= reg_IDEX.rc_instr;
       else
         reg_IDEX.instr  <= reg_IFID.instr;
         reg_IDEX.PC     <= reg_IFID.PC;
         reg_IDEX.op_code <= op_code;
+        reg_IDEX.regwr <= regwr;
+        reg_IDEX.ra_instr <= ra_instr;
+        reg_IDEX.rb_instr <= rb_instr;
+        reg_IDEX.rc_instr <= rc_instr;
         if (a0_format = '1') then -- A0 Format Instruction
           reg_IDEX.data1 <= (others => '0');
           reg_IDEX.data2 <= (others => '0');
@@ -532,11 +568,11 @@ port map (
           end if ;
         elsif (b1_format = '1') then
           reg_IDEX.data1 <= PC; --std_logic_vector(resize(signed(PC), reg_IDEX.data1'length));
-          reg_IDEX.data2 <= std_logic_vector(resize(shift_left(signed(disp_l), 2), reg_IDEX.data2'length));
+          reg_IDEX.data2 <= std_logic_vector(resize(shift_left(signed(disp_l), 1), reg_IDEX.data2'length));
           reg_IDEX.str_dest <= (others => '0');
         elsif (b2_format = '1') then
           reg_IDEX.data1 <= rd_data1;
-          reg_IDEX.data2 <= std_logic_vector(resize(shift_left(signed(disp_s), 2), reg_IDEX.data2'length));
+          reg_IDEX.data2 <= std_logic_vector(resize(shift_left(signed(disp_s), 1), reg_IDEX.data2'length));
           reg_IDEX.str_dest <= (others => '0');
         elsif (op_code = OP_MOV or op_code = OP_LOAD) then
           reg_IDEX.data1 <= rd_data2;
@@ -574,6 +610,10 @@ port map (
       reg_EXMEM.n_flag    <= '0';
       reg_EXMEM.o_flag    <= '0';
       reg_EXMEM.op_code   <= (others => '0');
+      reg_EXMEM.regwr     <= '0';
+      reg_EXMEM.ra_instr  <= '0';
+      reg_EXMEM.rb_instr  <= '0';
+      reg_EXMEM.rc_instr  <= '0';
     elsif rising_edge(clk) then
       reg_EXMEM.instr     <= reg_IDEX.instr;
       reg_EXMEM.PC        <= reg_IDEX.PC;
@@ -584,6 +624,10 @@ port map (
       reg_EXMEM.n_flag    <= n_flag;
       reg_EXMEM.o_flag    <= o_flag;
       reg_EXMEM.op_code   <= reg_IDEX.op_code;
+      reg_EXMEM.regwr     <= reg_IDEX.regwr;
+      reg_EXMEM.ra_instr  <= reg_IDEX.ra_instr;
+      reg_EXMEM.rb_instr  <= reg_IDEX.rb_instr;
+      reg_EXMEM.rc_instr  <= reg_IDEX.rc_instr;
 
       if (branch = '1' or stall_trig = '1') then
         reg_EXMEM.instr     <= (others => '0');
@@ -595,6 +639,10 @@ port map (
         reg_EXMEM.n_flag    <= '0';
         reg_EXMEM.o_flag    <= '0';
         reg_EXMEM.op_code   <= (others => '0');
+        reg_EXMEM.regwr     <= reg_EXMEM.regwr;
+        reg_EXMEM.ra_instr  <= reg_EXMEM.ra_instr;
+        reg_EXMEM.rb_instr  <= reg_EXMEM.rb_instr;
+        reg_EXMEM.rc_instr  <= reg_EXMEM.rc_instr;
       end if;
     end if;
   end process; -- ExecuteStage
@@ -607,18 +655,35 @@ port map (
       reg_MEMWR.result    <= (others => '0');
       reg_MEMWR.overflow  <= (others => '0');
       reg_MEMWR.o_flag    <= '0';
+      reg_MEMWR.regwr     <= '0';
+      reg_MEMWR.ra_instr  <= '0';
+      reg_MEMWR.rb_instr  <= '0';
+      reg_MEMWR.rc_instr  <= '0';
     elsif rising_edge(clk) then
       reg_MEMWR.instr     <= reg_EXMEM.instr;
       reg_MEMWR.PC        <= reg_EXMEM.PC;
       reg_MEMWR.op_code   <= reg_EXMEM.op_code;
       reg_MEMWR.overflow  <= reg_EXMEM.overflow;
       reg_MEMWR.o_flag    <= reg_EXMEM.o_flag;
-      if (reg_EXMEM.op_code = OP_LOAD) then
-        reg_MEMWR.result    <= douta;
+      reg_MEMWR.regwr     <= reg_EXMEM.regwr;
+      reg_MEMWR.ra_instr  <= reg_EXMEM.ra_instr;
+      reg_MEMWR.rb_instr  <= reg_EXMEM.rb_instr;
+      reg_MEMWR.rc_instr  <= reg_EXMEM.rc_instr;
+      if (reg_EXMEM.op_code = OP_LOAD and to_integer(unsigned(addra)) < 1024) then
+        reg_MEMWR.result  <= douta;
+      elsif (reg_EXMEM.op_code = OP_LOAD and addra = x"FFF0") then
+        reg_MEMWR.result  <= mm_input;
       elsif (reg_EXMEM.op_code = OP_LOADIMM) then
-        reg_MEMWR.result    <= imm_result;
+        reg_MEMWR.result  <= imm_result;
       else
-        reg_MEMWR.result    <= reg_EXMEM.result;
+        reg_MEMWR.result  <= reg_EXMEM.result;
+      end if;
+      if (reg_EXMEM.op_code = OP_STORE and addra = x"FFF2") then
+        mm_output <= mm_out;
+      end if;
+
+      if (reg_MEMWR.o_flag = '1') then
+        leds <= leds_reg;
       end if;
     end if;
   end process; --WritebackStage

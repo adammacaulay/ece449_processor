@@ -19,17 +19,25 @@ architecture Behavioural of processor_TB is
   constant CLOCK_PERIOD : time := 10 us;
   
   signal clock      : std_logic := '0';
-  signal reset      : std_logic := '0';
+  signal reset_e    : std_logic := '0';
+  signal reset_l    : std_logic := '0';
   signal inport     : std_logic_vector(15 downto 0);
   signal outport    : std_logic_vector(15 downto 0);
+  signal mm_input   : std_logic_vector(15 downto 0);
+  signal mm_output  : std_logic_vector(15 downto 0);
+  signal leds       : std_logic_vector(15 downto 0);
 
   -- Component declaration for the Unit Under Test (UUT)
   component PROCESSOR 
    port(
      clk        : in std_logic;
-     rstt      : in std_logic;
+     rst_l      : in std_logic;
+     rst_e      : in std_logic;
      inport     : in std_logic_vector(15 downto 0);
-     outport    : out std_logic_vector(15 downto 0)
+     outport    : out std_logic_vector(15 downto 0);
+     mm_input   : in std_logic_vector(15 downto 0);
+     mm_output  : out std_logic_vector(15 downto 0);
+     leds       : out std_logic_vector(15 downto 0)
   );
   end component; 
 
@@ -39,9 +47,13 @@ begin
   UUT: entity work.processor
   port map(
     clk => clock,
-    rst => reset,
+    rst_l => reset_l,
+    rst_e => reset_l,
     inport => inport,
-    outport => outport
+    outport => outport,
+    mm_input => mm_input,
+    mm_output => mm_output,
+    leds => leds
   );
   
   CLK_GEN : process is
@@ -51,20 +63,25 @@ begin
   end process CLK_GEN; 
   
   tb1: process begin
-    reset <= '1';
-    inport <= x"0002";
+    reset_l <= '1';
+    inport <= x"0001";
     wait for 30 us;
 
-    --Format B Test 1
-    reset <= '0';
-    inport <= x"0002"; --IN R0 , 02
-    wait for 10 us;
-    inport <= x"0003"; --IN R1 , 03
-    wait for 10 us;
-    inport <= x"0001"; --IN R2 , 01
-    wait for 10 us;
-    inport <= x"0005"; --IN R3 , 05
-    wait for 250 us;
+    --Final Test
+    reset_l <= '0';
+    inport <= x"0001";
+    wait for 1500 us;
+
+--    --Format B Test 1
+--    reset_l <= '0';
+--    inport <= x"0002"; --IN R0 , 02
+--    wait for 10 us;
+--    inport <= x"0003"; --IN R1 , 03
+--    wait for 10 us;
+--    inport <= x"0001"; --IN R2 , 01
+--    wait for 10 us;
+--    inport <= x"0005"; --IN R3 , 05
+--    wait for 250 us;
 
 --    --Format B Test 2
 --    reset <= '0';

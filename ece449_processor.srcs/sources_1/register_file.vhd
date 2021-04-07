@@ -14,9 +14,7 @@ entity REGISTER_FILE is
     --write signals
     wr_index        : in std_logic_vector(2 downto 0);
     wr_data         : in std_logic_vector(15 downto 0);
-    wr_overflowdata : in std_logic_vector(15 downto 0);
-    wr_enable       : in std_logic;
-    wr_ovenable     : in std_logic
+    wr_enable       : in std_logic
   );
 end REGISTER_FILE;
 
@@ -47,9 +45,6 @@ begin
           when "111" => reg_file(7) <= wr_data;
           when others => NULL; 
         end case;
-      end if;
-      if (wr_ovenable = '1') then
-        reg_file(7) <= wr_overflowdata; 
       end if;
     end if;
   end if;
