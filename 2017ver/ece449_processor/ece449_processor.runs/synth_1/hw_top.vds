@@ -1,0 +1,826 @@
+#-----------------------------------------------------------
+# Vivado v2017.4 (64-bit)
+# SW Build 2086221 on Fri Dec 15 20:55:39 MST 2017
+# IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
+# Start of session at: Wed Apr  7 00:36:38 2021
+# Process ID: 10160
+# Current directory: M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/synth_1
+# Command line: vivado.exe -log hw_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source hw_top.tcl
+# Log file: M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/synth_1/hw_top.vds
+# Journal file: M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source hw_top.tcl -notrace
+Command: synth_design -top hw_top -part xc7a35tcpg236-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 8896 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 344.945 ; gain = 102.598
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'hw_top' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:27]
+INFO: [Synth 8-3491] module 'processor' declared at 'M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:7' bound to instance 'CPU' of component 'processor' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:92]
+INFO: [Synth 8-638] synthesizing module 'processor' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:20]
+INFO: [Synth 8-3491] module 'DIST_ROM_1024' declared at 'M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/synth_1/.Xil/Vivado-10160-mads-pc6/realtime/DIST_ROM_1024_stub.vhdl:5' bound to instance 'rom0' of component 'DIST_ROM_1024' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:266]
+INFO: [Synth 8-638] synthesizing module 'DIST_ROM_1024' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/synth_1/.Xil/Vivado-10160-mads-pc6/realtime/DIST_ROM_1024_stub.vhdl:13]
+INFO: [Synth 8-3491] module 'REGISTER_FILE' declared at 'M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/register_file.vhd:5' bound to instance 'rf0' of component 'REGISTER_FILE' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:271]
+INFO: [Synth 8-638] synthesizing module 'REGISTER_FILE' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/register_file.vhd:21]
+INFO: [Synth 8-226] default block is never used [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/register_file.vhd:37]
+INFO: [Synth 8-256] done synthesizing module 'REGISTER_FILE' (1#1) [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/register_file.vhd:21]
+INFO: [Synth 8-3491] module 'DECODER' declared at 'M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/DECODER.vhd:5' bound to instance 'decoder0' of component 'DECODER' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:283]
+INFO: [Synth 8-638] synthesizing module 'DECODER' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/DECODER.vhd:26]
+INFO: [Synth 8-256] done synthesizing module 'DECODER' (2#1) [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/DECODER.vhd:26]
+INFO: [Synth 8-3491] module 'ALU' declared at 'M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/ALU.vhd:6' bound to instance 'alu0' of component 'ALU' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:302]
+INFO: [Synth 8-638] synthesizing module 'ALU' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/ALU.vhd:23]
+INFO: [Synth 8-226] default block is never used [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/ALU.vhd:73]
+INFO: [Synth 8-256] done synthesizing module 'ALU' (3#1) [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/ALU.vhd:23]
+	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
+	Parameter CLOCKING_MODE bound to: common_clock - type: string 
+	Parameter MEMORY_INIT_FILE bound to: none - type: string 
+	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter USE_MEM_INIT bound to: 1 - type: integer 
+	Parameter MESSAGE_CONTROL bound to: 0 - type: integer 
+	Parameter USE_EMBEDDED_CONSTRAINT bound to: 0 - type: integer 
+	Parameter MEMORY_OPTIMIZATION bound to: true - type: string 
+	Parameter WRITE_DATA_WIDTH_A bound to: 16 - type: integer 
+	Parameter READ_DATA_WIDTH_A bound to: 16 - type: integer 
+	Parameter BYTE_WRITE_WIDTH_A bound to: 16 - type: integer 
+	Parameter ADDR_WIDTH_A bound to: 16 - type: integer 
+	Parameter READ_RESET_VALUE_A bound to: 0 - type: string 
+	Parameter READ_LATENCY_A bound to: 0 - type: integer 
+	Parameter READ_DATA_WIDTH_B bound to: 16 - type: integer 
+	Parameter ADDR_WIDTH_B bound to: 16 - type: integer 
+	Parameter READ_RESET_VALUE_B bound to: 0 - type: string 
+	Parameter READ_LATENCY_B bound to: 0 - type: integer 
+INFO: [Synth 8-3491] module 'xpm_memory_dpdistram' declared at 'C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:6589' bound to instance 'xpm_memory_dpdistram_inst' of component 'xpm_memory_dpdistram' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:317]
+INFO: [Synth 8-638] synthesizing module 'xpm_memory_dpdistram' [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:6589]
+	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
+	Parameter CLOCKING_MODE bound to: common_clock - type: string 
+	Parameter MEMORY_INIT_FILE bound to: none - type: string 
+	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter USE_MEM_INIT bound to: 1 - type: integer 
+	Parameter MESSAGE_CONTROL bound to: 0 - type: integer 
+	Parameter USE_EMBEDDED_CONSTRAINT bound to: 0 - type: integer 
+	Parameter MEMORY_OPTIMIZATION bound to: true - type: string 
+	Parameter WRITE_DATA_WIDTH_A bound to: 16 - type: integer 
+	Parameter READ_DATA_WIDTH_A bound to: 16 - type: integer 
+	Parameter BYTE_WRITE_WIDTH_A bound to: 16 - type: integer 
+	Parameter ADDR_WIDTH_A bound to: 16 - type: integer 
+	Parameter READ_RESET_VALUE_A bound to: 0 - type: string 
+	Parameter READ_LATENCY_A bound to: 0 - type: integer 
+	Parameter READ_DATA_WIDTH_B bound to: 16 - type: integer 
+	Parameter ADDR_WIDTH_B bound to: 16 - type: integer 
+	Parameter READ_RESET_VALUE_B bound to: 0 - type: string 
+	Parameter READ_LATENCY_B bound to: 0 - type: integer 
+	Parameter P_CLOCKING_MODE bound to: 0 - type: integer 
+	Parameter P_MEMORY_OPTIMIZATION bound to: 1 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'xpm_memory_base' [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:57]
+	Parameter MEMORY_TYPE bound to: 2 - type: integer 
+	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
+	Parameter MEMORY_PRIMITIVE bound to: 1 - type: integer 
+	Parameter CLOCKING_MODE bound to: 0 - type: integer 
+	Parameter ECC_MODE bound to: 0 - type: integer 
+	Parameter MEMORY_INIT_FILE bound to: none - type: string 
+	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter USE_MEM_INIT bound to: 1 - type: integer 
+	Parameter MEMORY_OPTIMIZATION bound to: true - type: string 
+	Parameter WAKEUP_TIME bound to: 0 - type: integer 
+	Parameter AUTO_SLEEP_TIME bound to: 0 - type: integer 
+	Parameter MESSAGE_CONTROL bound to: 0 - type: integer 
+	Parameter VERSION bound to: 0 - type: integer 
+	Parameter USE_EMBEDDED_CONSTRAINT bound to: 0 - type: integer 
+	Parameter WRITE_DATA_WIDTH_A bound to: 16 - type: integer 
+	Parameter READ_DATA_WIDTH_A bound to: 16 - type: integer 
+	Parameter BYTE_WRITE_WIDTH_A bound to: 16 - type: integer 
+	Parameter ADDR_WIDTH_A bound to: 16 - type: integer 
+	Parameter READ_RESET_VALUE_A bound to: 0 - type: string 
+	Parameter READ_LATENCY_A bound to: 0 - type: integer 
+	Parameter WRITE_MODE_A bound to: 1 - type: integer 
+	Parameter WRITE_DATA_WIDTH_B bound to: 16 - type: integer 
+	Parameter READ_DATA_WIDTH_B bound to: 16 - type: integer 
+	Parameter BYTE_WRITE_WIDTH_B bound to: 16 - type: integer 
+	Parameter ADDR_WIDTH_B bound to: 16 - type: integer 
+	Parameter READ_RESET_VALUE_B bound to: 0 - type: string 
+	Parameter READ_LATENCY_B bound to: 0 - type: integer 
+	Parameter WRITE_MODE_B bound to: 1 - type: integer 
+	Parameter P_MEMORY_PRIMITIVE bound to: distributed - type: string 
+	Parameter P_MIN_WIDTH_DATA_A bound to: 16 - type: integer 
+	Parameter P_MIN_WIDTH_DATA_B bound to: 16 - type: integer 
+	Parameter P_MIN_WIDTH_DATA bound to: 16 - type: integer 
+	Parameter P_MIN_WIDTH_DATA_ECC bound to: 16 - type: integer 
+	Parameter P_MAX_DEPTH_DATA bound to: 512 - type: integer 
+	Parameter P_ECC_MODE bound to: no_ecc - type: string 
+	Parameter P_MEMORY_OPT bound to: yes - type: string 
+	Parameter P_WIDTH_COL_WRITE_A bound to: 16 - type: integer 
+	Parameter P_WIDTH_COL_WRITE_B bound to: 16 - type: integer 
+	Parameter P_NUM_COLS_WRITE_A bound to: 1 - type: integer 
+	Parameter P_NUM_COLS_WRITE_B bound to: 1 - type: integer 
+	Parameter P_NUM_ROWS_WRITE_A bound to: 1 - type: integer 
+	Parameter P_NUM_ROWS_WRITE_B bound to: 1 - type: integer 
+	Parameter P_NUM_ROWS_READ_A bound to: 1 - type: integer 
+	Parameter P_NUM_ROWS_READ_B bound to: 1 - type: integer 
+	Parameter P_WIDTH_ADDR_WRITE_A bound to: 9 - type: integer 
+	Parameter P_WIDTH_ADDR_WRITE_B bound to: 9 - type: integer 
+	Parameter P_WIDTH_ADDR_READ_A bound to: 9 - type: integer 
+	Parameter P_WIDTH_ADDR_READ_B bound to: 9 - type: integer 
+	Parameter P_WIDTH_ADDR_LSB_WRITE_A bound to: 0 - type: integer 
+	Parameter P_WIDTH_ADDR_LSB_WRITE_B bound to: 0 - type: integer 
+	Parameter P_WIDTH_ADDR_LSB_READ_A bound to: 0 - type: integer 
+	Parameter P_WIDTH_ADDR_LSB_READ_B bound to: 0 - type: integer 
+	Parameter P_ENABLE_BYTE_WRITE_A bound to: 0 - type: integer 
+	Parameter P_ENABLE_BYTE_WRITE_B bound to: 0 - type: integer 
+	Parameter P_SDP_WRITE_MODE bound to: yes - type: string 
+	Parameter NUM_CHAR_LOC bound to: 0 - type: integer 
+	Parameter MAX_NUM_CHAR bound to: 0 - type: integer 
+	Parameter P_MIN_WIDTH_DATA_SHFT bound to: 16 - type: integer 
+	Parameter P_MIN_WIDTH_DATA_LDW bound to: 4 - type: integer 
+INFO: [Synth 8-6059] Synth Info: [XPM_MEMORY 20-2] MEMORY_INIT_FILE (none), MEMORY_INIT_PARAM together specify no memory initialization. Initial memory contents will be all 0's.   [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:458]
+WARNING: [Synth 8-6060] Synth Warning: [XPM_MEMORY 30-15] MEMORY_TYPE (2) and MEMORY_PRIMITIVE (1) together specify a true dual port distributed RAM, which will be mapped to a dual port RAM structure using port A and B read interfaces but a single port A write interface, leaving the port B write interface unused.   [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:495]
+WARNING: [Synth 8-6060] Synth Warning: [XPM_MEMORY 30-16] MEMORY_SIZE (8192), WRITE_DATA_WIDTH_A (16), and ADDR_WIDTH_A (16) together imply that the addressable range exceeds the memory size for this configuration which uses port A write operations.   [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:497]
+WARNING: [Synth 8-6060] Synth Warning: [XPM_MEMORY 30-17] MEMORY_SIZE (8192), READ_DATA_WIDTH_A (16), and ADDR_WIDTH_A (16) together imply that the addressable range exceeds the memory size for this configuration which uses port A read operations.   [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:499]
+WARNING: [Synth 8-6060] Synth Warning: [XPM_MEMORY 30-19] MEMORY_SIZE (8192), READ_DATA_WIDTH_B (16), and ADDR_WIDTH_B (16) together imply that the addressable range exceeds the memory size for this configuration which uses port B read operations.   [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:503]
+INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
+INFO: [Synth 8-5772] Detected attribute (* ram_ecc = "no_ecc" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
+INFO: [Synth 8-256] done synthesizing module 'xpm_memory_base' (4#1) [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:57]
+INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
+INFO: [Synth 8-256] done synthesizing module 'xpm_memory_dpdistram' (5#1) [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:6589]
+WARNING: [Synth 8-6014] Unused sequential element reg_IFID_reg[PC] was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:284]
+WARNING: [Synth 8-6014] Unused sequential element reg_IDEX_reg[PC] was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:517]
+WARNING: [Synth 8-6014] Unused sequential element reg_EXMEM_reg[PC] was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:602]
+WARNING: [Synth 8-6014] Unused sequential element reg_EXMEM_reg[ra_instr] was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:602]
+WARNING: [Synth 8-6014] Unused sequential element reg_EXMEM_reg[rb_instr] was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:602]
+WARNING: [Synth 8-6014] Unused sequential element reg_EXMEM_reg[rc_instr] was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:602]
+WARNING: [Synth 8-6014] Unused sequential element reg_MEMWR_reg[PC] was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:651]
+WARNING: [Synth 8-6014] Unused sequential element reg_MEMWR_reg[ra_instr] was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:651]
+WARNING: [Synth 8-6014] Unused sequential element reg_MEMWR_reg[rb_instr] was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:651]
+WARNING: [Synth 8-6014] Unused sequential element reg_MEMWR_reg[rc_instr] was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:651]
+INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
+INFO: [Synth 8-256] done synthesizing module 'processor' (6#1) [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd:20]
+INFO: [Synth 8-3491] module 'display_controller' declared at 'M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/imports/VHDL/Display_Controller.vhd:12' bound to instance 'DISPLAY' of component 'display_controller' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:108]
+INFO: [Synth 8-638] synthesizing module 'display_controller' [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/imports/VHDL/Display_Controller.vhd:24]
+INFO: [Synth 8-256] done synthesizing module 'display_controller' (7#1) [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/imports/VHDL/Display_Controller.vhd:24]
+WARNING: [Synth 8-6014] Unused sequential element btnU_reg was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:155]
+WARNING: [Synth 8-6014] Unused sequential element btnD_reg was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:157]
+WARNING: [Synth 8-6014] Unused sequential element btnR_reg was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:159]
+WARNING: [Synth 8-6014] Unused sequential element HexKeyboard_reg was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:160]
+INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
+INFO: [Synth 8-256] done synthesizing module 'hw_top' (8#1) [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:27]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port sleep
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port rsta
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port regcea
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[15]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[14]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[13]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[12]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[11]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[10]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[9]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectsbiterra
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectdbiterra
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port clkb
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port rstb
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port enb
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port regceb
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port web[0]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[15]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[14]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[13]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[12]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[11]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[10]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[9]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[15]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[14]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[13]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[12]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[11]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[10]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[9]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[8]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[7]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[6]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[5]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[4]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[3]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[2]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[1]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[0]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectsbiterrb
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectdbiterrb
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:09 . Memory (MB): peak = 398.281 ; gain = 155.934
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:10 . Memory (MB): peak = 398.281 ; gain = 155.934
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/synth_1/.Xil/Vivado-10160-mads-pc6/dcp1/DIST_ROM_1024_in_context.xdc] for cell 'CPU/rom0'
+Finished Parsing XDC File [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/synth_1/.Xil/Vivado-10160-mads-pc6/dcp1/DIST_ROM_1024_in_context.xdc] for cell 'CPU/rom0'
+Parsing XDC File [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc]
+WARNING: [Vivado 12-507] No nets matched 'debug_clock_IBUF'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:14]
+WARNING: [Vivado 12-507] No nets matched 'clock_IBUF'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:19]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[0]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:22]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[0]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:23]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[1]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:24]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[1]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:25]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[2]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:26]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[2]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:27]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[3]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:28]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[3]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:29]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[4]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:30]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[4]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:31]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[5]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:32]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[5]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:33]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[6]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:34]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[6]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:35]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[7]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:36]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[7]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:37]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[8]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:38]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[8]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:39]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[9]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:40]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[9]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:41]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[10]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:42]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[10]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:43]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[11]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:44]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[11]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:45]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[12]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:46]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[12]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:47]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[13]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:48]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[13]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:49]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[14]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:50]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[14]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:51]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[15]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:52]
+WARNING: [Vivado 12-584] No ports matched 'dip_switches[15]'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:53]
+WARNING: [Vivado 12-584] No ports matched 'btnC'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:122]
+WARNING: [Vivado 12-584] No ports matched 'btnC'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:123]
+WARNING: [Vivado 12-584] No ports matched 'btnU'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:125]
+WARNING: [Vivado 12-584] No ports matched 'btnU'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:126]
+WARNING: [Vivado 12-584] No ports matched 'btnL'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:128]
+WARNING: [Vivado 12-584] No ports matched 'btnL'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:129]
+WARNING: [Vivado 12-584] No ports matched 'btnL'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:131]
+WARNING: [Vivado 12-584] No ports matched 'btnL'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:132]
+WARNING: [Vivado 12-584] No ports matched 'btnD'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:134]
+WARNING: [Vivado 12-584] No ports matched 'btnD'. [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc:135]
+Finished Parsing XDC File [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc]
+WARNING: [Project 1-498] One or more constraints failed evaluation while reading constraint file [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc] and the design contains unresolved black boxes. These constraints will be read post-synthesis (as long as their source constraint file is marked as used_in_implementation) and should be applied correctly then. You should review the constraints listed in the file [.Xil/hw_top_propImpl.xdc] and check the run log file to verify that these constraints were correctly applied.
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/hw_top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/hw_top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Sourcing Tcl File [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'CPU/xpm_memory_dpdistram_inst'
+WARNING: [Vivado 12-180] No cells matched 'get_cells -hier -filter {PRIMITIVE_SUBGROUP==LUTRAM || PRIMITIVE_SUBGROUP==dram || PRIMITIVE_SUBGROUP==uram || PRIMITIVE_SUBGROUP==BRAM}'. [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl:3]
+Finished Sourcing Tcl File [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'CPU/xpm_memory_dpdistram_inst'
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/hw_top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/hw_top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 735.535 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:18 ; elapsed = 00:00:25 . Memory (MB): peak = 735.535 ; gain = 493.188
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcpg236-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:18 ; elapsed = 00:00:25 . Memory (MB): peak = 735.535 ; gain = 493.188
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property DONT_TOUCH = true for CPU/rom0. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for CPU/xpm_memory_dpdistram_inst. (constraint file  auto generated constraint, line ).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:18 ; elapsed = 00:00:25 . Memory (MB): peak = 735.535 ; gain = 493.188
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5544] ROM "reg_file[0]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "reg_file[1]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "reg_file[2]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "reg_file[3]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "reg_file[4]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "reg_file[5]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "reg_file[6]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "reg_file[7]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5546] ROM "a0_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "a1_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "a2_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "a3_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "b1_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "b2_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "l1_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "l2_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/ALU.vhd:73]
+INFO: [Synth 8-5544] ROM "n_flag" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5546] ROM "z_flag" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "stall_trig" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5544] ROM "PC1" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "PC1" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5546] ROM "reg_IDEX[data1]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "stall_trig" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5544] ROM "PC1" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "PC1" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5546] ROM "reg_IDEX[data1]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5544] ROM "Digit1" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "Digit2" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "Digit3" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "Digit4" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+WARNING: [Synth 8-6014] Unused sequential element input_count_reg was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:145]
+WARNING: [Synth 8-6014] Unused sequential element output_count_reg was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:174]
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:19 ; elapsed = 00:00:25 . Memory (MB): peak = 735.535 ; gain = 493.188
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     32 Bit       Adders := 1     
+	   2 Input     16 Bit       Adders := 2     
+	   2 Input      8 Bit       Adders := 2     
+	   2 Input      2 Bit       Adders := 1     
++---Registers : 
+	               60 Bit    Registers := 1     
+	               40 Bit    Registers := 1     
+	               16 Bit    Registers := 17    
+	                8 Bit    Registers := 2     
+	                7 Bit    Registers := 7     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 17    
++---Muxes : 
+	   2 Input     60 Bit        Muxes := 2     
+	   2 Input     40 Bit        Muxes := 1     
+	   8 Input     32 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 45    
+	   3 Input     16 Bit        Muxes := 2     
+	   2 Input      7 Bit        Muxes := 2     
+	   4 Input      4 Bit        Muxes := 2     
+	   2 Input      3 Bit        Muxes := 5     
+	   8 Input      1 Bit        Muxes := 9     
+	  23 Input      1 Bit        Muxes := 8     
+	   2 Input      1 Bit        Muxes := 7     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module hw_top 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      8 Bit       Adders := 2     
++---Registers : 
+	               60 Bit    Registers := 1     
+	               40 Bit    Registers := 1     
+	               16 Bit    Registers := 1     
+	                8 Bit    Registers := 2     
+	                7 Bit    Registers := 4     
+	                1 Bit    Registers := 5     
++---Muxes : 
+	   2 Input     60 Bit        Muxes := 2     
+	   2 Input     40 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 4     
+Module REGISTER_FILE 
+Detailed RTL Component Info : 
++---Muxes : 
+	   8 Input      1 Bit        Muxes := 8     
+Module DECODER 
+Detailed RTL Component Info : 
++---Muxes : 
+	  23 Input      1 Bit        Muxes := 8     
+Module ALU 
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     32 Bit       Adders := 1     
++---Registers : 
+	                1 Bit    Registers := 2     
++---Muxes : 
+	   8 Input     32 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 2     
+Module processor 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     16 Bit       Adders := 2     
++---Registers : 
+	               16 Bit    Registers := 16    
+	                7 Bit    Registers := 3     
+	                1 Bit    Registers := 10    
++---Muxes : 
+	   3 Input     16 Bit        Muxes := 2     
+	   2 Input     16 Bit        Muxes := 43    
+	   2 Input      7 Bit        Muxes := 2     
+	   2 Input      3 Bit        Muxes := 5     
+	   2 Input      1 Bit        Muxes := 1     
+	   8 Input      1 Bit        Muxes := 1     
+Module display_controller 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      2 Bit       Adders := 1     
++---Registers : 
+	                2 Bit    Registers := 1     
++---Muxes : 
+	   4 Input      4 Bit        Muxes := 2     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5546] ROM "z_flag" won't be mapped to RAM because it is too sparse
+DSP Report: Generating DSP result_320, operation Mode is: A*B.
+DSP Report: operator result_320 is absorbed into DSP result_320.
+INFO: [Synth 8-5546] ROM "decoder0/a0_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "decoder0/a1_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "decoder0/a2_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "decoder0/a3_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "decoder0/b1_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "decoder0/b2_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "decoder0/l2_format" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "stall_trig" won't be mapped to RAM because it is too sparse
+WARNING: [Synth 8-6014] Unused sequential element output_count_reg was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:174]
+WARNING: [Synth 8-6014] Unused sequential element input_count_reg was removed.  [M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd:145]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port rsta
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port regcea
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[15]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[14]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[13]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[12]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[11]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[10]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addra[9]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectsbiterra
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectdbiterra
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port clkb
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port rstb
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port enb
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port regceb
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port web[0]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[15]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[14]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[13]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[12]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[11]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[10]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port addrb[9]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[15]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[14]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[13]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[12]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[11]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[10]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[9]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[8]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[7]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[6]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[5]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[4]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[3]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[2]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[1]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[0]
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectsbiterrb
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectdbiterrb
+INFO: [Synth 8-3886] merging instance 'CPU/reg_IFID_reg[inport][0]' (FDCE) to 'CPU/reg_IFID_reg[inport][4]'
+INFO: [Synth 8-3886] merging instance 'CPU/reg_IFID_reg[inport][1]' (FDCE) to 'CPU/reg_IFID_reg[inport][4]'
+INFO: [Synth 8-3886] merging instance 'CPU/reg_IFID_reg[inport][2]' (FDCE) to 'CPU/reg_IFID_reg[inport][4]'
+INFO: [Synth 8-3886] merging instance 'CPU/reg_IFID_reg[inport][3]' (FDCE) to 'CPU/reg_IFID_reg[inport][4]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\CPU/reg_IFID_reg[inport][4] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\CPU/reg_EXMEM_reg[o_flag] )
+INFO: [Synth 8-3886] merging instance 'CPU/reg_MEMWR_reg[o_flag]' (FDC) to 'CPU/reg_EXMEM_reg[o_flag]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\CPU/reg_EXMEM_reg[o_flag] )
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_IDEX_reg[instr][15]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_IDEX_reg[instr][14]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_IDEX_reg[instr][13]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_IDEX_reg[instr][12]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_IDEX_reg[instr][11]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_IDEX_reg[instr][10]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_IDEX_reg[instr][9]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[instr][15]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[instr][14]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[instr][13]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[instr][12]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[instr][11]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[instr][10]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[instr][9]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][15]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][14]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][13]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][12]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][11]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][10]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][9]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][5]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][4]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][3]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][2]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][1]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[instr][0]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[o_flag]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][15]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][14]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][13]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][12]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][11]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][10]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][9]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][8]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][7]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][6]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][5]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][4]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][3]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][2]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][1]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_EXMEM_reg[overflow][0]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][15]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][14]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][13]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][12]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][11]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][10]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][9]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][8]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][7]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][6]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][5]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][4]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][3]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][2]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][1]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_MEMWR_reg[overflow][0]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[15]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[14]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[13]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[12]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[11]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[10]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[9]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[8]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[7]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[6]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[5]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[4]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[3]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[2]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[1]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/leds_reg[0]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (CPU/reg_IFID_reg[inport][4]) is unused and will be removed from module hw_top.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:28 ; elapsed = 00:00:35 . Memory (MB): peak = 735.535 ; gain = 493.188
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Preliminary Mapping  Report (see note below)
++-----------------------------------------------------+----------------------------------+----------------+----------------------+------------------+
+|Module Name                                          | RTL Object                       | Inference      | Size (Depth x Width) | Primitives       | 
++-----------------------------------------------------+----------------------------------+----------------+----------------------+------------------+
+|\CPU/xpm_memory_dpdistram_inst /xpm_memory_base_inst | gen_wr_a.gen_word_narrow.mem_reg | User Attribute | 512 x 16             | RAM128X1D x 64   | 
++-----------------------------------------------------+----------------------------------+----------------+----------------------+------------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+
+DSP: Preliminary Mapping  Report (see note below)
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|ALU         | A*B         | 16     | 16     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-565] redefining clock 'sys_clk_pin'
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:38 ; elapsed = 00:00:45 . Memory (MB): peak = 786.723 ; gain = 544.375
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:45 ; elapsed = 00:00:53 . Memory (MB): peak = 914.180 ; gain = 671.832
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Final Mapping  Report
++-----------------------------------------------------+----------------------------------+----------------+----------------------+------------------+
+|Module Name                                          | RTL Object                       | Inference      | Size (Depth x Width) | Primitives       | 
++-----------------------------------------------------+----------------------------------+----------------+----------------------+------------------+
+|\CPU/xpm_memory_dpdistram_inst /xpm_memory_base_inst | gen_wr_a.gen_word_narrow.mem_reg | User Attribute | 512 x 16             | RAM128X1D x 64   | 
++-----------------------------------------------------+----------------------------------+----------------+----------------------+------------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\output_count_reg[7] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\input_count_reg[7] )
+WARNING: [Synth 8-3332] Sequential element (output_count_reg[7]) is unused and will be removed from module hw_top.
+WARNING: [Synth 8-3332] Sequential element (input_count_reg[7]) is unused and will be removed from module hw_top.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:46 ; elapsed = 00:00:54 . Memory (MB): peak = 914.180 ; gain = 671.832
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:47 ; elapsed = 00:00:54 . Memory (MB): peak = 914.180 ; gain = 671.832
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:47 ; elapsed = 00:00:54 . Memory (MB): peak = 914.180 ; gain = 671.832
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:47 ; elapsed = 00:00:55 . Memory (MB): peak = 914.180 ; gain = 671.832
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:47 ; elapsed = 00:00:55 . Memory (MB): peak = 914.180 ; gain = 671.832
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:47 ; elapsed = 00:00:55 . Memory (MB): peak = 914.180 ; gain = 671.832
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:47 ; elapsed = 00:00:55 . Memory (MB): peak = 914.180 ; gain = 671.832
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++------------+-----------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name | RTL Name              | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++------------+-----------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|hw_top      | input_stream_reg[17]  | 18     | 1     | NO           | YES                | YES               | 1      | 0       | 
+|hw_top      | output_stream_reg[47] | 17     | 1     | YES          | NO                 | YES               | 1      | 0       | 
++------------+-----------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+--------------+----------+
+|      |BlackBox name |Instances |
++------+--------------+----------+
+|1     |DIST_ROM_1024 |         1|
++------+--------------+----------+
+
+Report Cell Usage: 
++------+---------------------+------+
+|      |Cell                 |Count |
++------+---------------------+------+
+|1     |DIST_ROM_1024_bbox_0 |     1|
+|2     |BUFG                 |     3|
+|3     |CARRY4               |    10|
+|4     |DSP48E1              |     1|
+|5     |LUT1                 |    10|
+|6     |LUT2                 |    75|
+|7     |LUT3                 |   165|
+|8     |LUT4                 |   169|
+|9     |LUT5                 |   123|
+|10    |LUT6                 |   367|
+|11    |MUXF7                |    21|
+|12    |RAM128X1D            |    64|
+|13    |SRL16E               |     2|
+|14    |FDCE                 |   186|
+|15    |FDPE                 |     1|
+|16    |FDRE                 |   299|
+|17    |LDC                  |     1|
+|18    |IBUF                 |    16|
+|19    |OBUF                 |    32|
++------+---------------------+------+
+
+Report Instance Areas: 
++------+------------------------------+---------------------+------+
+|      |Instance                      |Module               |Cells |
++------+------------------------------+---------------------+------+
+|1     |top                           |                     |  1561|
+|2     |  CPU                         |processor            |  1287|
+|3     |    xpm_memory_dpdistram_inst |xpm_memory_dpdistram |   100|
+|4     |      xpm_memory_base_inst    |xpm_memory_base      |   100|
+|5     |    alu0                      |ALU                  |   193|
+|6     |    rf0                       |REGISTER_FILE        |   348|
+|7     |  DISPLAY                     |display_controller   |    12|
++------+------------------------------+---------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:47 ; elapsed = 00:00:55 . Memory (MB): peak = 914.180 ; gain = 671.832
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 125 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:35 ; elapsed = 00:00:47 . Memory (MB): peak = 914.180 ; gain = 334.578
+Synthesis Optimization Complete : Time (s): cpu = 00:00:47 ; elapsed = 00:00:55 . Memory (MB): peak = 914.180 ; gain = 671.832
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 113 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 65 instances were transformed.
+  LDC => LDCE: 1 instances
+  RAM128X1D => RAM128X1D (RAMD64E, RAMD64E, MUXF7, MUXF7, RAMD64E, RAMD64E): 64 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+95 Infos, 231 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:49 ; elapsed = 00:01:00 . Memory (MB): peak = 914.180 ; gain = 683.305
+INFO: [Common 17-1381] The checkpoint 'M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/synth_1/hw_top.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file hw_top_utilization_synth.rpt -pb hw_top_utilization_synth.pb
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.047 . Memory (MB): peak = 914.180 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Wed Apr  7 00:37:44 2021...

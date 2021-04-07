@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.4 (64-bit)
+# SW Build 2086221 on Fri Dec 15 20:55:39 MST 2017
+# IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
+# Start of session at: Wed Apr  7 00:37:51 2021
+# Process ID: 2076
+# Current directory: M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/impl_1
+# Command line: vivado.exe -log hw_top.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source hw_top.tcl -notrace
+# Log file: M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/impl_1/hw_top.vdi
+# Journal file: M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.runs/impl_1\vivado.jou
+#-----------------------------------------------------------
+source hw_top.tcl -notrace
