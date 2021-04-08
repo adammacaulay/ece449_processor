@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1617881683">
+  <File Type="PA-TCL" Name="hw_top.tcl"/>
+  <File Type="RDS-PROPCONSTRS" Name="hw_top_drc_synth.rpt"/>
+  <File Type="REPORTS-TCL" Name="hw_top_reports.tcl"/>
+  <File Type="RDS-RDS" Name="hw_top.vds"/>
+  <File Type="RDS-UTIL" Name="hw_top_utilization_synth.rpt"/>
+  <File Type="RDS-UTIL-PB" Name="hw_top_utilization_synth.pb"/>
+  <File Type="RDS-DCP" Name="hw_top.dcp"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="hw_top_timing_summary_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="hw_top_timing_summary_synth.pb"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/imports/sources_1/ALU.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../ece449_processor/ece449_processor.srcs/sources_1/ALU.vhd"/>
+        <Attr Name="ImportTime" Val="1617772976"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/sources_1/DECODER.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../ece449_processor/ece449_processor.srcs/sources_1/DECODER.vhd"/>
+        <Attr Name="ImportTime" Val="1617772976"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/sources_1/imports/VHDL/Display_Controller.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../ece449_processor/ece449_processor.srcs/sources_1/imports/VHDL/Display_Controller.vhd"/>
+        <Attr Name="ImportTime" Val="1617772976"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/sources_1/processor_top.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../ece449_processor/ece449_processor.srcs/sources_1/processor_top.vhd"/>
+        <Attr Name="ImportTime" Val="1617772977"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/sources_1/register_file.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../ece449_processor/ece449_processor.srcs/sources_1/register_file.vhd"/>
+        <Attr Name="ImportTime" Val="1617772977"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/sources_1/new/hw_top.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../ece449_processor/ece449_processor.srcs/sources_1/new/hw_top.vhd"/>
+        <Attr Name="ImportTime" Val="1617772977"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/test_files/bootloader.coe">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/test_files/FormatL_Test.coe">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="hw_top"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PSRCDIR/constrs_1/imports/imports/Basys3/basys-3-master.xdc">
+      <FileInfo>
+        <Attr Name="UserDisabled" Val="1"/>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../ece449_processor/ece449_processor.srcs/constrs_1/imports/Basys3/basys-3-master.xdc"/>
+        <Attr Name="ImportTime" Val="1617772975"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/constrs_1/imports/imports/bootloader_test/constraints.xdc">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../ece449_processor/ece449_processor.srcs/constrs_1/imports/bootloader_test/constraints.xdc"/>
+        <Attr Name="ImportTime" Val="1617772975"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2017"/>
+    <Step Id="synth_design"/>
+  </Strategy>
+  <BlockFileSet Type="BlockSrcs" Name="DIST_ROM_1024"/>
+</GenRun>

@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.4 (64-bit)
+# SW Build 2086221 on Fri Dec 15 20:55:39 MST 2017
+# IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
+# Start of session at: Wed Apr  7 13:06:45 2021
+# Process ID: 8964
+# Current directory: C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.runs/DIST_ROM_1024_synth_1
+# Command line: vivado.exe -log DIST_ROM_1024.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source DIST_ROM_1024.tcl
+# Log file: C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.runs/DIST_ROM_1024_synth_1/DIST_ROM_1024.vds
+# Journal file: C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.runs/DIST_ROM_1024_synth_1\vivado.jou
+#-----------------------------------------------------------
+source DIST_ROM_1024.tcl -notrace

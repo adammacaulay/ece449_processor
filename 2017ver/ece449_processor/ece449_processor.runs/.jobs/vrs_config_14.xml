@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Runs Version="1" Minor="0">
+	<Run Id="DIST_ROM_1024_synth_1" LaunchDir="C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.runs/DIST_ROM_1024_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="synth_1" LaunchDir="C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.runs/synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado">
+		<Parent Id="DIST_ROM_1024_synth_1"/>
+	</Run>
+</Runs>
+
