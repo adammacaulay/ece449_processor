@@ -16,30 +16,32 @@ proc create_report { reportName command } {
     send_msg_id runtcl-5 warning "$msg"
   }
 }
+set_param xicom.use_bs_reader 1
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.cache/wt [current_project]
-set_property parent.project_path M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.xpr [current_project]
+set_property webtalk.parent_dir C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.cache/wt [current_project]
+set_property parent.project_path C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.xpr [current_project]
 set_property XPM_LIBRARIES XPM_MEMORY [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
-set_property ip_output_repo m:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.cache/ip [current_project]
+set_property ip_output_repo c:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
-add_files m:/Desktop/ECE449Project/new/ece449_processor/test_files/bootloader.coe
+add_files C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/test_files/bootloader.coe
+add_files C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/test_files/FormatL_Test.coe
 read_vhdl -library xil_defaultlib {
-  M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/ALU.vhd
-  M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/DECODER.vhd
-  M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/imports/VHDL/Display_Controller.vhd
-  M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd
-  M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/register_file.vhd
-  M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd
+  C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/ALU.vhd
+  C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/DECODER.vhd
+  C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/imports/VHDL/Display_Controller.vhd
+  C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/processor_top.vhd
+  C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/register_file.vhd
+  C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/sources_1/imports/sources_1/new/hw_top.vhd
 }
-read_ip -quiet m:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/ip/DIST_ROM_1024/DIST_ROM_1024.xci
-set_property used_in_implementation false [get_files -all m:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/sources_1/ip/DIST_ROM_1024/DIST_ROM_1024_ooc.xdc]
+read_ip -quiet C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/sources_1/ip/DIST_ROM_1024/DIST_ROM_1024.xci
+set_property used_in_implementation false [get_files -all c:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/sources_1/ip/DIST_ROM_1024/DIST_ROM_1024_ooc.xdc]
 
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
@@ -49,8 +51,8 @@ set_property used_in_implementation false [get_files -all m:/Desktop/ECE449Proje
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc
-set_property used_in_implementation false [get_files M:/Desktop/ECE449Project/new/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc]
+read_xdc C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc
+set_property used_in_implementation false [get_files C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/constrs_1/imports/imports/bootloader_test/constraints.xdc]
 
 
 synth_design -top hw_top -part xc7a35tcpg236-1

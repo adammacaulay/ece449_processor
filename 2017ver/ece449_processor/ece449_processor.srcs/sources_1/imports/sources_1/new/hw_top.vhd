@@ -116,7 +116,6 @@ begin
     sseg => seven_segment
   );
 
-
     process( display_clock, digit_select, seven_segment )
     begin
         if ( rising_edge( display_clock )) then
@@ -160,7 +159,6 @@ begin
                     HexKeyboard <= input_stream( 15 downto 0 );
                 end if;
             end if;
-
          end if;
     end process;
 

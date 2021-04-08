@@ -10,7 +10,7 @@
       <Properties Property="FULL_PROBES.FILE" value=""/>
       <Properties Property="PROBES.FILE" value=""/>
       <Properties Property="PROGRAM.HW_BITSTREAM" value="$_project_name_.runs/impl_1/hw_top.bit"/>
-      <Properties Property="SLR.COUNT" value="c:/Users/Public/Desktop/ECE 449/1"/>
+      <Properties Property="SLR.COUNT" value="C:/Users/adammac8/AppData/Roaming/Xilinx/Vivado/1"/>
     </Object>
   </ObjectList>
   <probeset name="hw project" active="false"/>

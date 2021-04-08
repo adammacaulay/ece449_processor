@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
-// Date        : Wed Apr  7 01:34:03 2021
-// Host        : mads-pc6 running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode funcsim -rename_top DIST_ROM_1024 -prefix
-//               DIST_ROM_1024_ DIST_ROM_1024_sim_netlist.v
+// Date        : Wed Apr  7 13:07:23 2021
+// Host        : mads-pc5 running 64-bit major release  (build 9200)
+// Command     : write_verilog -force -mode funcsim
+//               C:/Users/adammac8/Desktop/v2017_proc/ece449_processor/2017ver/ece449_processor/ece449_processor.srcs/sources_1/ip/DIST_ROM_1024/DIST_ROM_1024_sim_netlist.v
 // Design      : DIST_ROM_1024
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -88,7 +88,7 @@ endmodule
 (* C_MEM_INIT_FILE = "DIST_ROM_1024.mif" *) (* C_MEM_TYPE = "0" *) (* C_PARSER_TYPE = "1" *) 
 (* C_PIPELINE_STAGES = "0" *) (* C_QCE_JOINED = "0" *) (* C_QUALIFY_WE = "0" *) 
 (* C_READ_MIF = "1" *) (* C_REG_A_D_INPUTS = "0" *) (* C_REG_DPRA_INPUT = "0" *) 
-(* C_SYNC_ENABLE = "1" *) (* C_WIDTH = "16" *) 
+(* C_SYNC_ENABLE = "1" *) (* C_WIDTH = "16" *) (* ORIG_REF_NAME = "dist_mem_gen_v8_0_12" *) 
 module DIST_ROM_1024_dist_mem_gen_v8_0_12
    (a,
     d,

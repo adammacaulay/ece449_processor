@@ -32,6 +32,7 @@ architecture behavioural of ALU is
     constant OP_TEST     : std_logic_vector := "111";
 
     signal result_32     : std_logic_vector(31 downto 0);
+    signal result_s      : std_logic_vector(15 downto 0);
     signal in1_32        : std_logic_vector(31 downto 0);
     signal in2_32        : std_logic_vector(31 downto 0);
 begin 
@@ -63,7 +64,7 @@ begin
   end if;
 end process;
 
-result    <= result_32(15 downto 0) when rst = '0' else (others=>'0');
+result    <= (others=>'0') when rst = '1' else result_s when (alu_mode = OP_SHR or alu_mode = OP_SHL) else result_32(15 downto 0);
 overflow  <= result_32(31 downto 16) when rst = '0' else (others=>'0');
 o_flag    <= '0';-- when rst= '1' else '1' when (or_reduce(result_32(31 downto 16)) = '1' and (result_32(15) = '0')) else 
              --'1' when (and_reduce(result_32(31 downto 16)) = '0' and (result_32(15) = '1')) else '0';
@@ -76,8 +77,8 @@ begin
     when OP_SUB     => result_32 <= std_logic_vector(signed(in1_32) - signed(in2_32));
     when OP_MUL     => result_32 <= std_logic_vector(signed(in1) * signed(in2));
     when OP_NAND    => result_32 <= (in1_32 nand in2_32);
-    when OP_SHL     => result_32 <= std_logic_vector(shift_left(unsigned(in1_32), to_integer(signed(in2_32))));
-    when OP_SHR     => result_32 <=  std_logic_vector(shift_right(unsigned(in1_32), to_integer(signed(in2_32))));
+    when OP_SHL     => result_s <= std_logic_vector(shift_left(unsigned(in1), to_integer(unsigned(in2))));
+    when OP_SHR     => result_s <= std_logic_vector(shift_right(unsigned(in1), to_integer(unsigned(in2))));
     when OP_TEST    => result_32 <= (others => '0');
     when others     => NULL;
    end case;

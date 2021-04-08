@@ -48,7 +48,7 @@ begin
   port map(
     clk => clock,
     rst_l => reset_l,
-    rst_e => reset_l,
+    rst_e => reset_e,
     inport => inport,
     outport => outport,
     mm_input => mm_input,
@@ -64,13 +64,24 @@ begin
   
   tb1: process begin
     reset_l <= '1';
+    reset_e <= '0';
     inport <= x"0001";
     wait for 30 us;
 
     --Final Test
     reset_l <= '0';
     inport <= x"0001";
-    wait for 1500 us;
+    wait for 50 us;
+    reset_l <= '1';
+    wait for 20 us;
+    reset_l <= '0';
+    wait for 500 us;
+    
+     reset_e <= '1';
+     wait for 20 us;
+     reset_e <= '0';
+     wait for 800 us;
+    
 
 --    --Format B Test 1
 --    reset_l <= '0';
